@@ -24,6 +24,9 @@ npm run db:seed
 
 # Dev server
 npm run dev
+
+# If Turbopack cache errors occur, use webpack mode:
+# npx next dev --webpack
 ```
 
 Open **http://localhost:3000**
@@ -64,6 +67,8 @@ Run `npm run db:seed` if accounts are missing.
 
 Visit each page and confirm it loads without console errors.
 
+> **Image assets:** See [docs/IMAGES.md](IMAGES.md) for all `/images/*` paths and which pages use them.
+
 | Page | URL |
 |------|-----|
 | Home | `/` |
@@ -71,7 +76,7 @@ Visit each page and confirm it loads without console errors.
 | About — Executive Committee | `/about/executive-committee` |
 | About — Rules & Policies | `/about/rules-policies` |
 | About — Racquetball | `/about/racquetball` |
-| Districts | `/districts` |
+| About — Districts | `/districts` (also under **About** nav dropdown) |
 | Tournaments | `/tournaments` |
 | Media — News | `/media/news` |
 | Media — Videos | `/media/videos` |
@@ -87,8 +92,8 @@ Visit each page and confirm it loads without console errors.
 
 ### Header & footer
 
-- [ ] Logo links to home
-- [ ] Main nav dropdowns open (Membership, Register, etc.)
+- [ ] Logo links to home (uses `/images/cropped-rra-logo.webp`)
+- [ ] Main nav dropdowns open (**About** includes Districts; **Membership**, **Media**, **Resources**)
 - [ ] **Verify Certificate** and **Join RRA** buttons work
 - [ ] **Admin Login** visible when logged out
 - [ ] **Dashboard** + **Sign Out** visible when logged in as admin
@@ -135,6 +140,8 @@ All POST forms fetch a CSRF token from `/api/csrf` automatically. Submit each fo
 ### Certificate verification — `/verify`
 
 - [ ] Valid certificate number (from seed/admin) → green “Valid Certificate” card with details
+- [ ] Valid **player/coach ID** (e.g. `PLR-TEST-001`, `CCH-TEST-001`) → valid result
+- [ ] Valid **QR code** (e.g. `QR-RRA-2025-PLR001`) in optional QR field → valid result
 - [ ] Invalid number → red “Verification Failed” card
 - [ ] Empty both fields → validation error
 
@@ -197,8 +204,14 @@ As **District Admin**:
 
 ### Certificates — `/admin/certificates`
 
+- [ ] **Issue Certificate** button opens player dropdown modal
 - [ ] Issued certificates appear in list
 - [ ] **View** PDF link opens (local: `/uploads/...` or `/api/files/...` on Netlify)
+
+### Tournaments — `/admin/tournaments`
+
+- [ ] **Add Tournament** button opens create modal (district admin: Jaipur locked)
+- [ ] Tournament list from seed / newly created entries
 
 ### Other admin pages
 
@@ -206,7 +219,7 @@ As **District Admin**:
 |------|----------------|
 | `/admin/coaches` | Coach list loads, district filter for district admin |
 | `/admin/memberships` | Club / school / academy tables populate |
-| `/admin/tournaments` | Tournament list from seed |
+| `/admin/tournaments` | Tournament list; **Add Tournament** for managers |
 | `/admin/media` | News, videos, galleries (Super Admin / content roles) |
 | `/admin/districts` | All districts (Super Admin) vs one (District Admin) |
 | `/admin/users` | User list (Super Admin only) |
@@ -313,7 +326,7 @@ npm run db:seed    # on staging DB only
 - [ ] Build succeeds
 - [ ] No secrets in git (`.env` not committed)
 - [ ] Demo accounts documented for stakeholders
-- [ ] Netlify env vars set (`DATABASE_URL`, `NEXTAUTH_*`, `APP_URL`)
+- [ ] Netlify env vars set (`DATABASE_URL`, `AUTH_SECRET` / `NEXTAUTH_*`, `APP_URL`)
 
 ---
 

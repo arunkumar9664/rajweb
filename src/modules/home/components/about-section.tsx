@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, Trophy, Users, Calendar, Award } from "lucide-react";
-import { aboutRacquetball } from "@/shared/config/site";
+import { aboutRacquetball, siteImages } from "@/shared/config/site";
 import { Button } from "@/shared/components/ui/button";
+import { MediaImage } from "@/shared/components/ui/media-image";
 
 const features = [
   { icon: Trophy, title: "State Championships", description: "Organizing competitive state-level tournaments across all categories." },
@@ -14,7 +15,7 @@ export function AboutSection() {
   return (
     <section className="py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+        <div className="grid items-start gap-12 lg:grid-cols-2">
           <div>
             <span className="text-sm font-bold uppercase tracking-wider text-secondary">About RRA</span>
             <h2 className="mt-2 text-3xl font-extrabold text-primary md:text-4xl">
@@ -32,19 +33,28 @@ export function AboutSection() {
               </Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="rounded-xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md"
-              >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-secondary/10">
-                  <feature.icon className="h-6 w-6 text-secondary" />
+          <div className="space-y-6">
+            <MediaImage
+              src={siteImages.about}
+              alt="Rajasthan Racquetball Association"
+              aspect="video"
+              fit="contain"
+              containerClassName="bg-white ring-1 ring-slate-200"
+            />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {features.map((feature) => (
+                <div
+                  key={feature.title}
+                  className="rounded-xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md"
+                >
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-secondary/10">
+                    <feature.icon className="h-6 w-6 text-secondary" />
+                  </div>
+                  <h3 className="font-bold text-primary">{feature.title}</h3>
+                  <p className="mt-2 text-sm text-slate-600">{feature.description}</p>
                 </div>
-                <h3 className="font-bold text-primary">{feature.title}</h3>
-                <p className="mt-2 text-sm text-slate-600">{feature.description}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

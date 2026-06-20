@@ -10,6 +10,8 @@ import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import type { ApiResponse } from "@/lib/api-client";
+import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
+import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
 
 const verifySchema = z
   .object({
@@ -69,6 +71,7 @@ export function VerifyForm() {
   });
 
   async function onSubmit(data: VerifyFormData) {
+    if (blockSubmitForStaticRelease("Certificate verification")) return;
     setResult(null);
     const params = new URLSearchParams();
     const cert = data.certificateNumber.trim();
@@ -112,6 +115,7 @@ export function VerifyForm() {
 
   return (
     <div className="space-y-6">
+      <ComingSoonBanner feature="Certificate verification" />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="space-y-2">
           <Label htmlFor="certificateNumber">Certificate / Player / Coach ID</Label>

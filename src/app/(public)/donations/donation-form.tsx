@@ -8,6 +8,8 @@ import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import { Textarea } from "@/shared/components/ui/textarea";
+import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
+import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
 import { apiPost, handleApiFetch } from "@/lib/api-client";
 
 const donationSchema = z.object({
@@ -33,6 +35,7 @@ export function DonationForm() {
   });
 
   async function onSubmit(data: DonationFormData) {
+    if (blockSubmitForStaticRelease("Donations")) return;
     try {
       const res = await apiPost("/api/donations", {
           name: data.donorName,
@@ -51,6 +54,7 @@ export function DonationForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <ComingSoonBanner feature="Donations" />
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="donorName">Full Name</Label>

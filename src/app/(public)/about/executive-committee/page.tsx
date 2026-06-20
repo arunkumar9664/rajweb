@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Mail, Phone } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
-import { siteConfig, executiveCommittee } from "@/shared/config/site";
+import { MediaImage } from "@/shared/components/ui/media-image";
+import { siteConfig, executiveCommittee, siteImages } from "@/shared/config/site";
 
 export const metadata: Metadata = {
   title: "Executive Committee",
@@ -20,6 +20,15 @@ export default function ExecutiveCommitteePage() {
         description="The elected leadership team responsible for governing and promoting racquetball across Rajasthan."
       />
       <PageContent>
+        <MediaImage
+          src={siteImages.rra.leadershipBanner}
+          alt="RRA leadership team — President, General Secretary, and Head Physio"
+          aspect="wide"
+          fit="contain"
+          containerClassName="mb-12 bg-white ring-1 ring-slate-200"
+          sizes="(max-width: 1200px) 100vw, 1024px"
+        />
+
         <p className="mb-12 max-w-3xl text-lg leading-relaxed text-slate-600">
           The Executive Committee of the Rajasthan Racquetball Association comprises experienced sports
           administrators, coaches, and community leaders committed to building a world-class racquetball
@@ -29,19 +38,25 @@ export default function ExecutiveCommitteePage() {
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {executiveCommittee.map((member) => (
-            <Card key={member.role} className="overflow-hidden">
-              <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-100">
-                <Image
-                  src={member.photo}
-                  alt={member.name}
-                  fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
+            <Card key={`${member.role}-${member.name}`} className="overflow-hidden">
+              <MediaImage
+                src={member.photo}
+                alt={member.name}
+                aspect="portrait"
+                fit="cover"
+                rounded={false}
+                className="object-top"
+              />
               <CardHeader>
                 <CardTitle className="text-lg">{member.name}</CardTitle>
-                <p className="text-sm font-semibold text-secondary">{member.role}</p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="text-sm font-semibold text-secondary">{member.role}</p>
+                  {"badge" in member && member.badge ? (
+                    <span className="rounded-full bg-accent/20 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                      {member.badge}
+                    </span>
+                  ) : null}
+                </div>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600">{member.description}</p>

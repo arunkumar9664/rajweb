@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { courtSpecifications, siteImages } from "@/shared/config/site";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { MediaImage } from "@/shared/components/ui/media-image";
 
 export const metadata: Metadata = {
   title: "Court Specifications",
@@ -23,9 +23,7 @@ function CourtSpecCard({
 }) {
   return (
     <Card className="overflow-hidden">
-      <div className="relative aspect-video w-full bg-slate-100">
-        <Image src={image} alt={title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
-      </div>
+      <MediaImage src={image} alt={title} aspect="video" fit="cover" rounded={false} />
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

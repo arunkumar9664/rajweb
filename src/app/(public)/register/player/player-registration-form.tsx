@@ -8,6 +8,8 @@ import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import { rajasthanDistricts } from "@/shared/config/site";
+import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
+import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
 import { apiPost, handleApiFetch } from "@/lib/api-client";
 
 const playerSchema = z.object({
@@ -36,6 +38,7 @@ export function PlayerRegistrationForm() {
   });
 
   async function onSubmit(data: PlayerFormData) {
+    if (blockSubmitForStaticRelease("Player registration")) return;
     try {
       const response = await apiPost("/api/players/register", {
           name: `${data.firstName} ${data.lastName}`,
@@ -55,6 +58,7 @@ export function PlayerRegistrationForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <ComingSoonBanner feature="Player registration" />
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="firstName">First Name</Label>

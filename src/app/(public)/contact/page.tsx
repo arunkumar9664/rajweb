@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Clock } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { LogoImage } from "@/shared/components/ui/media-image";
 import { siteConfig } from "@/shared/config/site";
 import { ContactForm } from "./contact-form";
 
@@ -44,7 +44,7 @@ export default function ContactPage() {
                 {contactIcons.map((item) => (
                   <div key={item.label} className="flex gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-secondary/10 p-2">
-                      <Image src={item.icon} alt={item.label} width={32} height={32} className="object-contain" />
+                      <LogoImage src={item.icon} alt={item.label} maxHeight={32} maxWidth={32} />
                     </div>
                     <div>
                       <p className="font-semibold text-primary">{item.label}</p>

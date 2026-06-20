@@ -9,6 +9,8 @@ import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { rajasthanDistricts } from "@/shared/config/site";
+import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
+import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
 import { apiPost, handleApiFetch } from "@/lib/api-client";
 
 const coachSchema = z.object({
@@ -36,6 +38,7 @@ export function CoachRegistrationForm() {
   });
 
   async function onSubmit(data: CoachFormData) {
+    if (blockSubmitForStaticRelease("Coach registration")) return;
     try {
       const levelMap: Record<string, string> = {
         "level-1": "LEVEL_1",
@@ -61,6 +64,7 @@ export function CoachRegistrationForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <ComingSoonBanner feature="Coach registration" />
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="fullName">Full Name</Label>

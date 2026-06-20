@@ -4,7 +4,8 @@ import { MapPin } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
-import { rajasthanDistricts } from "@/shared/config/site";
+import { LogoImage } from "@/shared/components/ui/media-image";
+import { rajasthanDistricts, districtLogos } from "@/shared/config/site";
 
 export const metadata: Metadata = {
   title: "District Associations",
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default function DistrictsPage() {
+  const featuredDistricts = Object.keys(districtLogos);
+
   return (
     <>
       <PageHeader
@@ -27,19 +30,59 @@ export default function DistrictsPage() {
           representative to get involved in racquetball near you.
         </p>
 
+        {featuredDistricts.length > 0 && (
+          <section className="mb-14">
+            <h2 className="mb-6 text-xl font-bold text-primary">Affiliated District Chapters</h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {featuredDistricts.map((district) => (
+                <Card key={district} className="overflow-hidden text-center">
+                  <CardContent className="flex flex-col items-center gap-4 p-6">
+                    <div className="flex h-28 w-28 items-center justify-center">
+                      <LogoImage
+                        src={districtLogos[district]}
+                        alt={`${district} Racquetball Association`}
+                        maxHeight={112}
+                        maxWidth={112}
+                      />
+                    </div>
+                    <div>
+                      <p className="font-bold text-primary">{district}</p>
+                      <p className="text-sm text-slate-500">District Racquetball Association</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <h2 className="mb-6 text-xl font-bold text-primary">All Rajasthan Districts</h2>
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {rajasthanDistricts.map((district) => (
             <Card key={district} className="group hover:border-secondary/30">
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 group-hover:bg-secondary/10">
-                    <MapPin className="h-5 w-5 text-primary group-hover:text-secondary" />
-                  </div>
+                  {districtLogos[district] ? (
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center">
+                      <LogoImage
+                        src={districtLogos[district]}
+                        alt={district}
+                        maxHeight={40}
+                        maxWidth={40}
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/5 group-hover:bg-secondary/10">
+                      <MapPin className="h-5 w-5 text-primary group-hover:text-secondary" />
+                    </div>
+                  )}
                   <CardTitle className="text-base">{district}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-slate-500">District Association — Rajasthan</p>
+                <p className="text-sm text-slate-500">
+                  {districtLogos[district] ? "Affiliated chapter" : "District Association — Rajasthan"}
+                </p>
               </CardContent>
             </Card>
           ))}

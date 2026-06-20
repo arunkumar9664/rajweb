@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Quote } from "lucide-react";
+import { MediaImage } from "@/shared/components/ui/media-image";
 import { testimonials, siteImages } from "@/shared/config/site";
 
 export function PresidentMessage() {
@@ -9,15 +9,15 @@ export function PresidentMessage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="relative">
-            <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-slate-700">
-              <Image
-                src={siteImages.president}
-                alt="Mr. Mangi Ram Boyal - President, RRA"
-                width={600}
-                height={750}
-                className="h-full w-full object-cover object-top"
-              />
-            </div>
+            <MediaImage
+              src={siteImages.president}
+              alt="Mr. Aamir Khan - President, RRA"
+              aspect="portrait"
+              fit="cover"
+              containerClassName="rounded-2xl bg-slate-700"
+              className="object-top"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
             <div className="absolute -bottom-4 -right-4 h-32 w-32 rounded-2xl bg-accent/20" />
           </div>
           <div>
@@ -30,7 +30,7 @@ export function PresidentMessage() {
             <p className="mt-4 leading-relaxed text-slate-300">
               Together, we are building a strong racquetball ecosystem — from grassroots training to state championships. I invite all enthusiasts, clubs, schools, and academies to join us in this journey. Let&apos;s win together!
             </p>
-            <p className="mt-6 font-bold text-accent">— Mr. Mangi Ram Boyal, President, RRA</p>
+            <p className="mt-6 font-bold text-accent">— Mr. Aamir Khan, President, RRA</p>
           </div>
         </div>
       </div>

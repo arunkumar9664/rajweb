@@ -4,7 +4,11 @@ import { compare } from "bcryptjs";
 import prisma from "@/infrastructure/database/prisma";
 import { ROLE_PERMISSIONS, type RoleSlug } from "@/security/rbac/permissions";
 
+const authSecret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: authSecret,
+  trustHost: true,
   session: {
     strategy: "jwt",
     maxAge: 30 * 60,
@@ -23,8 +27,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
+        const email = (credentials.email as string).trim().toLowerCase();
+
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string },
+          where: { email },
           include: { role: true },
         });
 

@@ -9,6 +9,8 @@ import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { rajasthanDistricts } from "@/shared/config/site";
+import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
+import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
 import { apiPost, handleApiFetch } from "@/lib/api-client";
 
 const clubSchema = z.object({
@@ -36,6 +38,7 @@ export function ClubMembershipForm() {
   });
 
   async function onSubmit(data: ClubFormData) {
+    if (blockSubmitForStaticRelease("Club membership")) return;
     try {
       const response = await apiPost("/api/memberships/club", { ...data, courts: Number(data.courts) });
       const { data: payload, message } = await handleApiFetch<{ membershipId: string }>(response);
@@ -48,6 +51,7 @@ export function ClubMembershipForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <ComingSoonBanner feature="Club membership" />
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="clubName">Club Name</Label>

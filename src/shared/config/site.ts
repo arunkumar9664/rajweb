@@ -117,8 +117,8 @@ export const siteImages = {
   logoLarge: "/images/rra-logo-2-1024x995.webp",
   favicon: "/images/cropped-rra-logo-32x32.webp",
   banner: "/images/LED_Banner_2240x128px-Road-to-Chengdu3-1024x59.png",
-  about: "/images/Screenshot-2026-01-06-at-4.35.13-PM-1024x758.png",
-  president: "/images/mangi-ram.webp",
+  about: "/images/rra/rra-affiliation-poster.jpg",
+  president: "/images/rra/portrait-aamir-khan.jpg",
   social: {
     facebook: "/images/fb-1-1024x1024.webp",
     instagram: "/images/Instagram_icon.png-1024x1024.webp",
@@ -131,8 +131,8 @@ export const siteImages = {
     overview: "/images/racquetball-spec-1024x1024.webp",
   },
   court: {
-    indoor: "/images/racquetball-court-1024x674.webp",
-    outdoor: "/images/image123modern.jpeg",
+    indoor: "/images/rra/training-camp-court.jpg",
+    outdoor: "/images/rra/outdoor-court-facility.jpg",
   },
   sponsors: [
     { name: "Brightmoon", logo: "/images/brightmoon.jpeg" },
@@ -148,34 +148,130 @@ export const siteImages = {
     { name: "International Federation", logo: "/images/international.webp" },
   ],
   gallery: [
-    { title: "RRA Event", src: "/images/IMG_20260119_152906-edited-scaled.jpg" },
-    { title: "RRA Tournament", src: "/images/IMG_20260119_153432-edited-scaled.jpg" },
-    { title: "Racquetball Action", src: "/images/8040892_orig.jpg" },
-    { title: "Training Session", src: "/images/1001067424-1024x768.jpg" },
-    { title: "RRA Leadership", src: "/images/rajbalajs-edited-2.jpeg" },
+    { title: "State Championship Poster", src: "/images/rra/poster-state-championship-2026.jpg", category: "Tournament" },
+    { title: "National Championship Award", src: "/images/rra/award-national-championship.jpg", category: "Events" },
+    { title: "Live Match Action", src: "/images/rra/action-court-01.jpg", category: "Action" },
+    { title: "Tournament Rally", src: "/images/rra/action-court-02.jpg", category: "Action" },
+    { title: "Inter-State Competition", src: "/images/rra/action-court-03.jpg", category: "Action" },
+    { title: "Championship Point", src: "/images/rra/action-court-04.jpg", category: "Action" },
+    { title: "Training Camp on Court", src: "/images/rra/training-camp-court.jpg", category: "Training" },
+    { title: "Glass Court Action", src: "/images/rra/action-court-05.jpg", category: "Action" },
+    { title: "RRA Team Group Photo", src: "/images/rra/team-group-01.jpg", category: "Team" },
+    { title: "State Team with Officials", src: "/images/rra/team-group-02.jpg", category: "Team" },
+    { title: "Outdoor Court Play", src: "/images/rra/outdoor-court-action.jpg", category: "Facilities" },
+    { title: "Outdoor Racquetball Facility", src: "/images/rra/outdoor-court-facility.jpg", category: "Facilities" },
+    { title: "RRA Leadership Team", src: "/images/rra/leadership-team-banner.jpg", category: "Leadership" },
+    { title: "RRA Affiliation & Officials", src: "/images/rra/rra-affiliation-poster.jpg", category: "Leadership" },
   ],
+  rra: {
+    poster: "/images/rra/poster-state-championship-2026.jpg",
+    affiliationPoster: "/images/rra/rra-affiliation-poster.jpg",
+    leadershipBanner: "/images/rra/leadership-team-banner.jpg",
+    physioBanner: "/images/rra/physio-abpt-banner.jpg",
+  },
 };
 
-export const executiveCommittee = [
+export type TournamentEventStatus = "Upcoming" | "Ongoing" | "Completed";
+
+export type TournamentEvent = {
+  id: string;
+  title: string;
+  date: string;
+  venue: string;
+  location: string;
+  status: TournamentEventStatus;
+  ageGroups: string[];
+  events: string[];
+  poster: string;
+};
+
+/** Current RRA tournament — details from official poster. */
+export const tournamentEvents: TournamentEvent[] = [
   {
-    name: "Mr. Mangi Ram Boyal",
-    role: "President",
-    photo: "/images/mangi-ram.webp",
-    description: "Provides overall leadership and strategic direction for RRA operations and development initiatives across Rajasthan.",
-  },
-  {
-    name: "Mr. Aashish Pooina",
-    role: "General Secretary",
-    photo: "/images/asishpooniawalaimage.jpeg",
-    description: "Manages administrative affairs, membership records, and official correspondence with the Indian Racquetball Association.",
-  },
-  {
-    name: "Mr. Manoj Kumar",
-    role: "Treasurer",
-    photo: "/images/manoj-kumar-edited-1.webp",
-    description: "Oversees financial management, budgeting, and transparent reporting of association funds.",
+    id: "state-championship-2026",
+    title: "Racquetball Training Camp & Racquetball State Championship",
+    date: "30 June 2026",
+    venue: "Jaipur",
+    location: "Jaipur",
+    status: "Upcoming",
+    ageGroups: ["Sub Junior", "Junior", "Senior"],
+    events: ["Singles", "Doubles", "Mixed"],
+    poster: "/images/rra/poster-state-championship-2026.jpg",
   },
 ];
+
+export const tournamentPoster = tournamentEvents[0];
+
+export type ExecutiveMember = {
+  name: string;
+  role: string;
+  photo: string;
+  description: string;
+  badge?: string;
+};
+
+export const executiveCommittee: ExecutiveMember[] = [
+  {
+    name: "Mr. Aamir Khan",
+    role: "President",
+    photo: "/images/rra/portrait-aamir-khan.jpg",
+    description:
+      "Provides overall leadership and strategic direction for RRA operations and development initiatives across Rajasthan.",
+  },
+  {
+    name: "Mr. Ravindra Singh Bhati",
+    role: "Vice President",
+    badge: "Support By RRA",
+    photo: "/images/rra/portrait-ravindra-bhati.jpg",
+    description:
+      "Supports RRA initiatives, district coordination, and statewide promotion of racquetball development programs.",
+  },
+  {
+    name: "Mr. Ajay Singh Meena",
+    role: "Vice President",
+    photo: "/images/rra/portrait-ajay-meena.jpg",
+    description:
+      "Assists in tournament planning, player outreach, and strengthening racquetball at the district level across Rajasthan.",
+  },
+  {
+    name: "Mr. Aashish Poonia",
+    role: "General Secretary",
+    photo: "/images/asishpooniawalaimage.jpeg",
+    description:
+      "Manages administrative affairs, membership records, and official correspondence with the Indian Racquetball Association.",
+  },
+  {
+    name: "Mr. Manoj Choudhary",
+    role: "Treasurer",
+    photo: "/images/manoj-kumar-edited-1.webp",
+    description:
+      "Oversees financial management, budgeting, and transparent reporting of association funds.",
+  },
+];
+
+export const physioPartners = [
+  {
+    name: "ABPT — High Performance Sports Science Centre",
+    director: "Ankit Bhardwaj",
+    role: "Head Physio, Rajasthan Racquetball Association",
+    location: "Jaipur",
+    phone: "+91 99289 62982",
+    banner: "/images/rra/physio-abpt-banner.jpg",
+    services: [
+      "Sports injury assessment & rehabilitation",
+      "Pre-competition screening",
+      "High-performance sports science support",
+      "On-tournament physio coverage",
+    ],
+  },
+];
+
+export const districtLogos: Record<string, string> = {
+  Alwar: "/images/rra/district-alwar-logo.jpg",
+  Dausa: "/images/rra/district-dausa-logo.jpg",
+  Jodhpur: "/images/rra/district-jodhpur-logo.jpg",
+  Sirohi: "/images/rra/district-sirohi-logo.jpg",
+};
 
 export const heroSlides = [
   {
@@ -184,7 +280,7 @@ export const heroSlides = [
     subtitle: "Official State Body for Racquetball in Rajasthan",
     description: "Promoting excellence in racquetball across Rajasthan through structured tournaments, certification programs, and official training initiatives.",
     cta: { primary: { label: "Join RRA", href: "/membership/club" }, secondary: { label: "View Tournaments", href: "/tournaments" } },
-    image: "/images/IMG_20260119_152906-edited-scaled.jpg",
+    image: "/images/rra/action-court-01.jpg",
   },
   {
     id: 2,
@@ -192,7 +288,7 @@ export const heroSlides = [
     subtitle: "Building Champions Across Rajasthan",
     description: "From grassroots training to state-level championships, RRA is committed to developing racquetball talent at every level.",
     cta: { primary: { label: "Register as Player", href: "/register/player" }, secondary: { label: "Learn More", href: "/about/racquetball" } },
-    image: "/images/IMG_20260119_153432-edited-scaled.jpg",
+    image: "/images/rra/action-court-05.jpg",
   },
   {
     id: 3,
@@ -200,7 +296,7 @@ export const heroSlides = [
     subtitle: "IOC Recognized Since 1985",
     description: "Racquetball was a charter member of the World Games in 1981 and has been included in five IOC-Recognized Continental Games since 1995.",
     cta: { primary: { label: "About Racquetball", href: "/about/racquetball" }, secondary: { label: "RRA History", href: "/about/history" } },
-    image: "/images/racquetball-court-1024x674.webp",
+    image: "/images/rra/training-camp-court.jpg",
   },
 ];
 

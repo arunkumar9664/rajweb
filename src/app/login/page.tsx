@@ -7,11 +7,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, Shield, MapPin } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
+import { LogoImage } from "@/shared/components/ui/media-image";
+import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
+import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
 import { siteConfig, siteImages } from "@/shared/config/site";
 
 const loginSchema = z.object({
@@ -55,6 +57,7 @@ function LoginForm() {
   });
 
   async function loginWithCredentials(email: string, password: string) {
+    if (blockSubmitForStaticRelease("Admin portal login")) return false;
     setError("");
     const result = await signIn("credentials", {
       email,
@@ -88,18 +91,15 @@ function LoginForm() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <Image
-            src={siteImages.logo}
-            alt={siteConfig.name}
-            width={64}
-            height={64}
-            className="mx-auto mb-4 h-16 w-16 rounded-xl object-contain"
-          />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center">
+            <LogoImage src={siteImages.logo} alt={siteConfig.name} maxHeight={64} maxWidth={64} className="rounded-xl" />
+          </div>
           <h1 className="text-2xl font-bold text-primary">{siteConfig.shortName} Admin</h1>
           <p className="mt-1 text-sm text-slate-500">Sign in to access the admin dashboard</p>
         </div>
 
         <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+          <ComingSoonBanner feature="Admin portal login" />
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>

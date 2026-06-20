@@ -6,6 +6,8 @@ import { apiError } from "@/core/api/api-response";
 import { generateRequestId } from "@/core/api/request-context";
 import { ErrorCodes } from "@/core/errors/error-codes";
 
+const authSecret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
+
 const isDev = process.env.NODE_ENV === "development";
 
 const securityHeaders: Record<string, string> = {
@@ -20,6 +22,14 @@ const securityHeaders: Record<string, string> = {
   "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
 };
 
+const adminRoles = new Set([
+  "super-admin",
+  "federation-admin",
+  "district-admin",
+  "tournament-manager",
+  "content-manager",
+]);
+
 function applySecurityHeaders(response: NextResponse) {
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
@@ -27,11 +37,16 @@ function applySecurityHeaders(response: NextResponse) {
   response.headers.set("X-Request-Id", generateRequestId());
 }
 
-export async function middleware(request: NextRequest) {
-  const ip =
+function getClientIp(request: NextRequest) {
+  return (
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     request.headers.get("x-real-ip") ||
-    "unknown";
+    "unknown"
+  );
+}
+
+export async function middleware(request: NextRequest) {
+  const ip = getClientIp(request);
 
   if (request.nextUrl.pathname.startsWith("/api/")) {
     const allowed = await checkRateLimit(`global:${ip}`, 120, 60000);
@@ -54,7 +69,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (request.nextUrl.pathname.startsWith("/admin")) {
-    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+    const token = await getToken({ req: request, secret: authSecret });
 
     if (!token) {
       const loginUrl = new URL("/login", request.url);
@@ -62,15 +77,8 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
-    const adminRoles = [
-      "super-admin",
-      "federation-admin",
-      "district-admin",
-      "tournament-manager",
-      "content-manager",
-    ];
-
-    if (!adminRoles.includes(token.role as string)) {
+    const role = token.role as string | undefined;
+    if (!role || !adminRoles.has(role)) {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }

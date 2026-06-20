@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { Globe, Medal, Users } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
+import { MediaImage } from "@/shared/components/ui/media-image";
 import { aboutRacquetball, siteImages } from "@/shared/config/site";
 
 export const metadata: Metadata = {
@@ -45,17 +45,16 @@ export default function AboutRacquetballPage() {
         description="Discover the sport of racquetball — its history, global standing, and development across Rajasthan."
       />
       <PageContent>
-        <div className="mb-10 overflow-hidden rounded-2xl">
-          <Image
-            src={siteImages.about}
-            alt="About Racquetball"
-            width={1024}
-            height={758}
-            className="w-full object-cover"
-          />
-        </div>
+        <MediaImage
+          src={siteImages.about}
+          alt="About Racquetball — RRA overview"
+          aspect="video"
+          fit="contain"
+          priority
+          containerClassName="mb-10 bg-white ring-1 ring-slate-200"
+        />
         <div className="grid gap-12 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6 lg:col-span-2">
             {paragraphs.map((paragraph, index) => (
               <p key={index} className="text-lg leading-relaxed text-slate-600">
                 {paragraph}

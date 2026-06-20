@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { siteConfig, siteImages, navigation } from "@/shared/config/site";
 import { Button } from "@/shared/components/ui/button";
+import { LogoImage } from "@/shared/components/ui/media-image";
 import { HeaderAuth, MobileHeaderAuth } from "@/shared/components/layout/header-auth";
 import { cn } from "@/lib/utils";
 
@@ -17,14 +17,16 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2.5 sm:gap-3">
-          <Image
-            src={siteImages.logo}
-            alt={siteConfig.name}
-            width={44}
-            height={44}
-            className="h-10 w-10 shrink-0 rounded-lg object-contain sm:h-11 sm:w-11"
-            priority
-          />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-11 sm:w-11">
+            <LogoImage
+              src={siteImages.logo}
+              alt={siteConfig.name}
+              maxHeight={44}
+              maxWidth={44}
+              priority
+              className="rounded-lg"
+            />
+          </div>
           <div className="hidden min-w-0 sm:block">
             <p className="text-sm font-bold leading-tight text-primary">{siteConfig.shortName}</p>
             <p className="hidden text-xs text-slate-500 xl:block">Rajasthan Racquetball</p>

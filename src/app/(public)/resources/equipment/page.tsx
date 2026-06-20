@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { MediaImage } from "@/shared/components/ui/media-image";
 import { siteImages } from "@/shared/config/site";
 
 export const metadata: Metadata = {
@@ -55,22 +55,19 @@ export default function EquipmentPage() {
         description="Quality equipment for training and competition — following nationally and internationally accepted standards."
       />
       <PageContent>
-        <div className="mb-12 overflow-hidden rounded-2xl">
-          <Image
-            src={siteImages.equipment.overview}
-            alt="Racquetball equipment"
-            width={1024}
-            height={1024}
-            className="mx-auto max-h-80 w-full object-contain"
-          />
-        </div>
+        <MediaImage
+          src={siteImages.equipment.overview}
+          alt="Racquetball equipment specification diagram"
+          aspect="square"
+          fit="contain"
+          containerClassName="mb-12 max-w-2xl mx-auto bg-white ring-1 ring-slate-200"
+          sizes="(max-width: 768px) 100vw, 512px"
+        />
 
         <div className="grid gap-8 lg:grid-cols-3">
           {equipment.map(({ title, image, description, details }) => (
             <Card key={title} className="overflow-hidden">
-              <div className="relative aspect-square bg-slate-50">
-                <Image src={image} alt={title} fill className="object-contain p-4" sizes="(max-width: 768px) 100vw, 33vw" />
-              </div>
+              <MediaImage src={image} alt={title} aspect="square" fit="contain" rounded={false} />
               <CardHeader>
                 <CardTitle>{title}</CardTitle>
                 <p className="text-sm text-slate-600">{description}</p>

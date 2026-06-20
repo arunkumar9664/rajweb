@@ -9,6 +9,8 @@ import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { rajasthanDistricts } from "@/shared/config/site";
+import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
+import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
 import { apiPost, handleApiFetch } from "@/lib/api-client";
 
 const academySchema = z.object({
@@ -37,6 +39,7 @@ export function AcademyMembershipForm() {
   });
 
   async function onSubmit(data: AcademyFormData) {
+    if (blockSubmitForStaticRelease("Academy membership")) return;
     try {
       const response = await apiPost("/api/memberships/academy", { ...data, coachCount: Number(data.coachCount) });
       const { data: payload, message } = await handleApiFetch<{ membershipId: string }>(response);
@@ -49,6 +52,7 @@ export function AcademyMembershipForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <ComingSoonBanner feature="Academy membership" />
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="academyName">Academy Name</Label>

@@ -1,22 +1,18 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { siteConfig, siteImages, navigation } from "@/shared/config/site";
+import { LogoImage } from "@/shared/components/ui/media-image";
 
 export function Footer() {
   return (
     <footer className="bg-primary text-white">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
-          <div className="lg:col-span-2">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-6 lg:items-start">
+          <div className="md:col-span-2 lg:col-span-2">
             <div className="flex items-center gap-3">
-              <Image
-                src={siteImages.logo}
-                alt={siteConfig.name}
-                width={48}
-                height={48}
-                className="h-12 w-12 rounded-lg object-contain bg-white/10 p-1"
-              />
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white/10 p-1">
+                <LogoImage src={siteImages.logo} alt={siteConfig.name} maxHeight={48} maxWidth={48} />
+              </div>
               <div>
                 <p className="text-lg font-bold">{siteConfig.shortName}</p>
                 <p className="text-sm text-slate-300">{siteConfig.tagline}</p>
@@ -40,14 +36,14 @@ export function Footer() {
                   aria-label={label}
                   title={label}
                 >
-                  <Image src={icon} alt={label} width={24} height={24} className="h-6 w-6 object-contain" />
+                  <LogoImage src={icon} alt={label} maxHeight={24} maxWidth={24} />
                 </a>
               ))}
             </div>
           </div>
 
           {navigation.footer.map((section) => (
-            <div key={section.title}>
+            <div key={section.title} className="min-w-0">
               <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-accent">
                 {section.title}
               </h3>

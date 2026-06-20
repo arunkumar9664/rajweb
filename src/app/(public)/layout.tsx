@@ -1,5 +1,7 @@
 import { Header, Footer } from "@/shared/components/layout";
 
+export const revalidate = 300;
+
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-full flex-1 flex-col bg-background">
