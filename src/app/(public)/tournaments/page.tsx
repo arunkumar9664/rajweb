@@ -5,8 +5,6 @@ import { Button } from "@/shared/components/ui/button";
 import { tournamentEvents } from "@/shared/config/site";
 import { TournamentEventCard } from "./tournament-event-card";
 
-export const revalidate = 300;
-
 export const metadata: Metadata = {
   title: "Tournaments",
   description:

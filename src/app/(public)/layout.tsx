@@ -1,6 +1,8 @@
 import { Header, Footer } from "@/shared/components/layout";
 
-export const revalidate = 300;
+/** Pre-render all public pages at build — instant CDN navigation. */
+export const dynamic = "force-static";
+export const revalidate = 86400;
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (

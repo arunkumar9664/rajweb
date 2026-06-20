@@ -4,10 +4,10 @@ import { Button } from "@/shared/components/ui/button";
 import { MediaImage, LogoImage } from "@/shared/components/ui/media-image";
 import { formatDate } from "@/lib/utils";
 import { siteImages } from "@/shared/config/site";
-import { getHomeNews } from "@/modules/home/data/get-news";
+import { getHomeNewsSync } from "@/modules/home/data/get-news";
 
-export async function LatestNews() {
-  const news = await getHomeNews();
+export function LatestNews() {
+  const news = getHomeNewsSync();
 
   return (
     <section className="bg-white py-20">

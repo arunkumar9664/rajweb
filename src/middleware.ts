@@ -46,6 +46,19 @@ function getClientIp(request: NextRequest) {
 }
 
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Public static pages: skip all async middleware work for fastest navigation.
+  if (
+    !pathname.startsWith("/api/") &&
+    !pathname.startsWith("/admin") &&
+    !pathname.startsWith("/login")
+  ) {
+    const response = NextResponse.next();
+    applySecurityHeaders(response);
+    return response;
+  }
+
   const ip = getClientIp(request);
 
   if (request.nextUrl.pathname.startsWith("/api/")) {

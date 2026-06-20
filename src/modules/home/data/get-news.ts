@@ -1,4 +1,5 @@
 import { unstable_cache } from "next/cache";
+import { isStaticSiteRelease } from "@/shared/lib/static-release";
 
 export type HomeNewsItem = {
   id: string;
@@ -60,7 +61,19 @@ async function fetchNewsFromDb(): Promise<HomeNewsItem[]> {
   }
 }
 
-export const getHomeNews = unstable_cache(fetchNewsFromDb, ["home-news"], {
-  revalidate: 300,
+const getCachedNews = unstable_cache(fetchNewsFromDb, ["home-news"], {
+  revalidate: 3600,
   tags: ["news"],
 });
+
+/** Static release: instant data, no database round-trip. */
+export function getHomeNewsSync(): HomeNewsItem[] {
+  return fallbackNews;
+}
+
+export async function getHomeNews(): Promise<HomeNewsItem[]> {
+  if (isStaticSiteRelease() || !process.env.DATABASE_URL) {
+    return fallbackNews;
+  }
+  return getCachedNews();
+}

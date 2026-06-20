@@ -26,3 +26,8 @@ export function blockSubmitForStaticRelease(featureLabel: string): boolean {
 export function isStaticReleaseMode(): boolean {
   return process.env.NEXT_PUBLIC_ENABLE_LIVE_FORMS !== "true";
 }
+
+/** Server-side: skip DB/API work for static public release. */
+export function isStaticSiteRelease(): boolean {
+  return isStaticReleaseMode();
+}

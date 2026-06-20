@@ -16,7 +16,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex shrink-0 items-center gap-2.5 sm:gap-3">
+        <Link href="/" prefetch className="flex shrink-0 items-center gap-2.5 sm:gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-11 sm:w-11">
             <LogoImage
               src={siteImages.logo}
@@ -52,6 +52,7 @@ export function Header() {
                       <Link
                         key={child.href}
                         href={child.href}
+                        prefetch
                         className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-secondary"
                       >
                         {child.name}
@@ -64,6 +65,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
+                prefetch
                 className="shrink-0 rounded-md px-2.5 py-2 text-sm font-medium whitespace-nowrap text-slate-700 transition-colors hover:bg-slate-100 hover:text-primary"
               >
                 {item.name}
@@ -76,13 +78,13 @@ export function Header() {
           <div className="hidden items-center gap-2 sm:gap-3 lg:flex">
             <HeaderAuth />
             <Button variant="outline" size="sm" className="hidden sm:inline-flex" asChild>
-              <Link href="/verify">
+              <Link href="/verify" prefetch>
                 <span className="hidden xl:inline">Verify Certificate</span>
                 <span className="xl:hidden">Verify</span>
               </Link>
             </Button>
             <Button size="sm" asChild>
-              <Link href="/membership/club">Join RRA</Link>
+              <Link href="/membership/club" prefetch>Join RRA</Link>
             </Button>
           </div>
 
@@ -107,6 +109,7 @@ export function Header() {
             <div key={item.name}>
               <Link
                 href={item.href}
+                prefetch
                 className="block rounded-md px-3 py-2 text-sm font-medium text-primary hover:bg-slate-100"
                 onClick={() => setMobileOpen(false)}
               >
@@ -116,6 +119,7 @@ export function Header() {
                 <Link
                   key={child.href}
                   href={child.href}
+                  prefetch
                   className="block rounded-md py-2 pl-6 text-sm text-slate-600 hover:text-secondary"
                   onClick={() => setMobileOpen(false)}
                 >
@@ -126,10 +130,10 @@ export function Header() {
           ))}
           <div className="flex flex-col gap-2 pt-4">
             <Button variant="outline" asChild>
-              <Link href="/verify">Verify Certificate</Link>
+              <Link href="/verify" prefetch>Verify Certificate</Link>
             </Button>
             <Button asChild>
-              <Link href="/membership/club">Join RRA</Link>
+              <Link href="/membership/club" prefetch>Join RRA</Link>
             </Button>
           </div>
           <MobileHeaderAuth onNavigate={() => setMobileOpen(false)} />
