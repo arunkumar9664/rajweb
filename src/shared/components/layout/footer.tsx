@@ -1,7 +1,11 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Globe, Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig, siteImages, navigation } from "@/shared/config/site";
 import { LogoImage } from "@/shared/components/ui/media-image";
+
+const websiteUrl = siteConfig.url.startsWith("http")
+  ? siteConfig.url
+  : `https://${siteConfig.website}`;
 
 export function Footer() {
   return (
@@ -63,22 +67,50 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-6 border-t border-white/10 pt-8 md:grid-cols-3">
-          <div className="flex items-center gap-3 text-sm text-slate-300">
-            <Mail className="h-5 w-5 shrink-0 text-accent" />
+        <div className="mt-12 grid gap-6 border-t border-white/10 pt-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex items-start gap-3 text-sm text-slate-300">
+            <Mail className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
             <a href={`mailto:${siteConfig.email}`} className="hover:text-white">
               {siteConfig.email}
             </a>
           </div>
-          <div className="flex items-center gap-3 text-sm text-slate-300">
-            <Phone className="h-5 w-5 shrink-0 text-accent" />
-            <a href={`tel:${siteConfig.phone}`} className="hover:text-white">
-              {siteConfig.phone}
+          <div className="flex items-start gap-3 text-sm text-slate-300">
+            <Globe className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+            <a
+              href={websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white"
+            >
+              {siteConfig.website}
             </a>
           </div>
-          <div className="flex items-center gap-3 text-sm text-slate-300">
-            <MapPin className="h-5 w-5 shrink-0 text-accent" />
-            <span>{siteConfig.address}</span>
+          <div className="flex items-start gap-3 text-sm text-slate-300">
+            <Phone className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+            <div className="flex flex-col gap-1">
+              {siteConfig.phones.map((phone) => (
+                <a
+                  key={phone}
+                  href={`tel:${phone.replace(/\s/g, "")}`}
+                  className="hover:text-white"
+                >
+                  {phone}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-start gap-3 text-sm text-slate-300 sm:col-span-2 lg:col-span-1">
+            <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+            <div className="space-y-3">
+              <div>
+                <p className="font-semibold text-white">Reg. Office</p>
+                <p>{siteConfig.registeredOffice}</p>
+              </div>
+              <div>
+                <p className="font-semibold text-white">Head Office</p>
+                <p>{siteConfig.headOffice}</p>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -3,6 +3,7 @@ import { courtSpecifications, siteImages } from "@/shared/config/site";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { MediaImage } from "@/shared/components/ui/media-image";
+import { MediaImageSlider } from "@/shared/components/ui/media-image-slider";
 
 export const metadata: Metadata = {
   title: "Court Specifications",
@@ -13,17 +14,23 @@ export const metadata: Metadata = {
 function CourtSpecCard({
   title,
   image,
+  images,
   dimensions,
   features,
 }: {
   title: string;
-  image: string;
+  image?: string;
+  images?: string[];
   dimensions: Record<string, string>;
   features: string[];
 }) {
   return (
     <Card className="overflow-hidden">
-      <MediaImage src={image} alt={title} aspect="video" fit="cover" rounded={false} />
+      {images && images.length > 0 ? (
+        <MediaImageSlider images={images} alt={title} />
+      ) : image ? (
+        <MediaImage src={image} alt={title} aspect="video" fit="cover" rounded={false} />
+      ) : null}
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
@@ -72,13 +79,13 @@ export default function CourtSpecificationsPage() {
         <div className="grid gap-8 lg:grid-cols-2">
           <CourtSpecCard
             title={courtSpecifications.indoor.title}
-            image={siteImages.court.indoor}
+            images={siteImages.court.indoorSlider}
             dimensions={courtSpecifications.indoor.dimensions}
             features={courtSpecifications.indoor.features}
           />
           <CourtSpecCard
             title={courtSpecifications.outdoor.title}
-            image={siteImages.court.outdoor}
+            images={siteImages.court.outdoorSlider}
             dimensions={courtSpecifications.outdoor.dimensions}
             features={courtSpecifications.outdoor.features}
           />

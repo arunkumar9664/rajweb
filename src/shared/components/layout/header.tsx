@@ -29,11 +29,11 @@ export function Header() {
           </div>
           <div className="hidden min-w-0 sm:block">
             <p className="text-sm font-bold leading-tight text-primary">{siteConfig.shortName}</p>
-            <p className="hidden text-xs text-slate-500 xl:block">Rajasthan Racquetball</p>
+            <p className="hidden text-xs text-slate-500 lg:block">Rajasthan Racquetball</p>
           </div>
         </Link>
 
-        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 xl:flex">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 lg:flex">
           {navigation.main.map((item) =>
             item.children ? (
               <div
@@ -79,8 +79,8 @@ export function Header() {
             <HeaderAuth />
             <Button variant="outline" size="sm" className="hidden sm:inline-flex" asChild>
               <Link href="/verify" prefetch>
-                <span className="hidden xl:inline">Verify Certificate</span>
-                <span className="xl:hidden">Verify</span>
+                <span className="hidden lg:inline">Verify Certificate</span>
+                <span className="lg:hidden">Verify</span>
               </Link>
             </Button>
             <Button size="sm" asChild>
@@ -89,7 +89,7 @@ export function Header() {
           </div>
 
           <button
-            className="rounded-md p-2 text-primary xl:hidden"
+            className="rounded-md p-2 text-primary lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -100,7 +100,7 @@ export function Header() {
 
       <div
         className={cn(
-          "overflow-hidden border-t border-slate-200 bg-white xl:hidden",
+          "overflow-hidden border-t border-slate-200 bg-white lg:hidden",
           mobileOpen ? "max-h-[80vh] overflow-y-auto" : "max-h-0"
         )}
       >

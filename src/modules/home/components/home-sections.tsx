@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import { MediaImage, LogoImage } from "@/shared/components/ui/media-image";
+import { LogoImage } from "@/shared/components/ui/media-image";
 import { formatDate } from "@/lib/utils";
-import { siteImages } from "@/shared/config/site";
+import { siteConfig, siteImages } from "@/shared/config/site";
 import { getHomeNewsSync } from "@/modules/home/data/get-news";
 
 export function LatestNews() {
@@ -72,16 +72,6 @@ export function FederationsSection() {
             </div>
           ))}
         </div>
-        <div className="mt-10 flex justify-center px-4">
-          <MediaImage
-            src={siteImages.banner}
-            alt="Road to Chengdu"
-            aspect="wide"
-            fit="contain"
-            containerClassName="max-w-3xl bg-white"
-            sizes="(max-width: 768px) 100vw, 768px"
-          />
-        </div>
       </div>
     </section>
   );
@@ -98,9 +88,40 @@ export function ContactSection() {
               <h2 className="mt-2 text-3xl font-extrabold text-white">Get in Touch</h2>
               <p className="mt-4 text-slate-300">Have questions about membership, tournaments, or player registration? We&apos;re here to help.</p>
               <div className="mt-8 space-y-4 text-slate-300">
-                <p><strong className="text-white">Email:</strong> rajasthanracquetball@gmail.com</p>
-                <p><strong className="text-white">Phone:</strong> +91 99289 62982</p>
-                <p><strong className="text-white">Address:</strong> Rajasthan, India</p>
+                <p>
+                  <strong className="text-white">Email:</strong>{" "}
+                  <a href={`mailto:${siteConfig.email}`} className="hover:text-white">
+                    {siteConfig.email}
+                  </a>
+                </p>
+                <p>
+                  <strong className="text-white">Website:</strong>{" "}
+                  <a
+                    href={siteConfig.url.startsWith("http") ? siteConfig.url : `https://${siteConfig.website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white"
+                  >
+                    {siteConfig.website}
+                  </a>
+                </p>
+                <p>
+                  <strong className="text-white">Phone:</strong>{" "}
+                  {siteConfig.phones.map((phone, index) => (
+                    <span key={phone}>
+                      {index > 0 ? " · " : ""}
+                      <a href={`tel:${phone.replace(/\s/g, "")}`} className="hover:text-white">
+                        {phone}
+                      </a>
+                    </span>
+                  ))}
+                </p>
+                <p>
+                  <strong className="text-white">Reg. Office:</strong> {siteConfig.registeredOffice}
+                </p>
+                <p>
+                  <strong className="text-white">Head Office:</strong> {siteConfig.headOffice}
+                </p>
               </div>
             </div>
             <div className="flex items-center justify-center bg-secondary/20 p-8 md:p-12">

@@ -496,6 +496,19 @@ model ContactMessage {
   @@map("contact_messages")
 }
 
+model EquipmentOrder {
+  id        String   @id @default(cuid())
+  name      String
+  mobile    String
+  address   String
+  district  String
+  equipment String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("equipment_orders")
+}
+
 // ─── Website Content ───────────────────────────────────────────
 
 model WebsiteContent {

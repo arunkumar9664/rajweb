@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   PresidentMessage,
+  GeneralSecretaryMessage,
   TestimonialsSection,
   MembershipCTA,
 } from "@/modules/home/components/president-message";
@@ -33,6 +34,7 @@ export default function HomePage() {
       <AboutSection />
       <LatestNews />
       <PresidentMessage />
+      <GeneralSecretaryMessage />
       <TestimonialsSection />
       <MembershipCTA />
       <FederationsSection />

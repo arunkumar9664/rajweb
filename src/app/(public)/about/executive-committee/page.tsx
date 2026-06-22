@@ -22,7 +22,7 @@ export default function ExecutiveCommitteePage() {
       <PageContent>
         <MediaImage
           src={siteImages.rra.leadershipBanner}
-          alt="RRA leadership team — President, General Secretary, and Head Physio"
+          alt="RRA leadership — President Aamir Khan, General Secretary Aashish Poonia, and Head Physio Ankit Bhardwaj"
           aspect="wide"
           fit="contain"
           containerClassName="mb-12 bg-white ring-1 ring-slate-200"
@@ -50,7 +50,18 @@ export default function ExecutiveCommitteePage() {
               <CardHeader>
                 <CardTitle className="text-lg">{member.name}</CardTitle>
                 <div className="flex flex-wrap items-center gap-2">
-                  <p className="text-sm font-semibold text-secondary">{member.role}</p>
+                  {member.positions ? (
+                    <div className="space-y-2">
+                      {member.positions.map((position) => (
+                        <div key={`${position.role}-${position.organization}`}>
+                          <p className="text-sm font-semibold text-secondary">{position.role}</p>
+                          <p className="text-xs text-slate-500">{position.organization}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm font-semibold text-secondary">{member.role}</p>
+                  )}
                   {"badge" in member && member.badge ? (
                     <span className="rounded-full bg-accent/20 px-2.5 py-0.5 text-xs font-semibold text-primary">
                       {member.badge}

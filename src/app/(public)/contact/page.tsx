@@ -1,15 +1,34 @@
 import type { Metadata } from "next";
-import { Clock } from "lucide-react";
+import { Clock, Globe } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { LogoImage } from "@/shared/components/ui/media-image";
 import { siteConfig } from "@/shared/config/site";
 import { ContactForm } from "./contact-form";
 
+const websiteUrl = siteConfig.url.startsWith("http")
+  ? siteConfig.url
+  : `https://${siteConfig.website}`;
+
 const contactIcons = [
   { label: "Email", value: siteConfig.email, href: `mailto:${siteConfig.email}`, icon: "/images/icon-email.png" },
-  { label: "Phone", value: siteConfig.phone, href: `tel:${siteConfig.phone.replace(/\s/g, "")}`, icon: "/images/icon-phone-call.png" },
-  { label: "Address", value: siteConfig.address, icon: "/images/icon-push-pin-simple.png" },
+  { label: "Website", value: siteConfig.website, href: websiteUrl, icon: null },
+  ...siteConfig.phones.map((phone) => ({
+    label: "Phone",
+    value: phone,
+    href: `tel:${phone.replace(/\s/g, "")}`,
+    icon: "/images/icon-phone-call.png",
+  })),
+  {
+    label: "Reg. Office",
+    value: siteConfig.registeredOffice,
+    icon: "/images/icon-push-pin-simple.png",
+  },
+  {
+    label: "Head Office",
+    value: siteConfig.headOffice,
+    icon: "/images/icon-push-pin-simple.png",
+  },
 ];
 
 export const metadata: Metadata = {
@@ -42,14 +61,25 @@ export default function ContactPage() {
             <Card>
               <CardContent className="space-y-6 p-6">
                 {contactIcons.map((item) => (
-                  <div key={item.label} className="flex gap-4">
+                  <div key={`${item.label}-${item.value}`} className="flex gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-secondary/10 p-2">
-                      <LogoImage src={item.icon} alt={item.label} maxHeight={32} maxWidth={32} />
+                      {item.icon ? (
+                        <LogoImage src={item.icon} alt={item.label} maxHeight={32} maxWidth={32} />
+                      ) : (
+                        <Globe className="h-6 w-6 text-secondary" />
+                      )}
                     </div>
                     <div>
                       <p className="font-semibold text-primary">{item.label}</p>
                       {item.href ? (
-                        <a href={item.href} className="text-slate-600 hover:text-secondary">{item.value}</a>
+                        <a
+                          href={item.href}
+                          target={item.label === "Website" ? "_blank" : undefined}
+                          rel={item.label === "Website" ? "noopener noreferrer" : undefined}
+                          className="text-slate-600 hover:text-secondary"
+                        >
+                          {item.value}
+                        </a>
                       ) : (
                         <p className="text-slate-600">{item.value}</p>
                       )}

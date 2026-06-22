@@ -38,6 +38,60 @@ export function PresidentMessage() {
   );
 }
 
+export function GeneralSecretaryMessage() {
+  return (
+    <section className="bg-primary py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="relative">
+            <MediaImage
+              src={siteImages.generalSecretary}
+              alt="Mr. Aashish Poonia - Founder & General Secretary, RRA"
+              aspect="portrait"
+              fit="cover"
+              containerClassName="rounded-2xl bg-slate-700"
+              className="object-top"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div className="absolute -bottom-4 -right-4 h-32 w-32 rounded-2xl bg-accent/20" />
+          </div>
+          <div>
+            <span className="text-sm font-bold uppercase tracking-wider text-accent">Leadership</span>
+            <h2 className="mt-2 text-3xl font-extrabold text-white md:text-4xl">
+              General Secretary&apos;s Message
+            </h2>
+            <Quote className="mt-6 h-10 w-10 text-accent" />
+            <p className="mt-4 text-lg leading-relaxed text-slate-300">
+              As Founder and General Secretary of the Rajasthan Racquetball Association, I am committed to
+              building a transparent, well-organised federation that serves every district, club, school,
+              and academy across our state.
+            </p>
+            <p className="mt-4 leading-relaxed text-slate-300">
+              From membership registration and player records to tournament coordination and official
+              correspondence with the Indian Racquetball Association, our team works to give every athlete
+              a clear path from grassroots sport to state and national competition. I welcome players,
+              coaches, and institutions to connect with RRA and grow racquetball together in Rajasthan.
+            </p>
+            <div className="mt-6 space-y-3">
+              <p className="font-bold text-accent">— Mr. Aashish Poonia</p>
+              <div className="space-y-2 text-sm">
+                <div>
+                  <p className="font-semibold text-white">Founder &amp; General Secretary</p>
+                  <p className="text-slate-400">Rajasthan Racquetball Association</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-white">Vice President</p>
+                  <p className="text-slate-400">Indian Racquetball Association</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function TestimonialsSection() {
   return (
     <section className="py-20">

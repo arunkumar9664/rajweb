@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { PageHeader, PageContent } from "@/shared/components/layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { MediaImage } from "@/shared/components/ui/media-image";
 import { siteImages } from "@/shared/config/site";
+import { EquipmentSection } from "./equipment-section";
 
 export const metadata: Metadata = {
   title: "Equipment Information",
@@ -64,27 +64,7 @@ export default function EquipmentPage() {
           sizes="(max-width: 768px) 100vw, 512px"
         />
 
-        <div className="grid gap-8 lg:grid-cols-3">
-          {equipment.map(({ title, image, description, details }) => (
-            <Card key={title} className="overflow-hidden">
-              <MediaImage src={image} alt={title} aspect="square" fit="contain" rounded={false} />
-              <CardHeader>
-                <CardTitle>{title}</CardTitle>
-                <p className="text-sm text-slate-600">{description}</p>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2">
-                  {details.map((detail) => (
-                    <li key={detail} className="flex gap-2 text-sm text-slate-600">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" />
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <EquipmentSection items={equipment} />
       </PageContent>
     </>
   );

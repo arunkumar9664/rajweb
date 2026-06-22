@@ -6,7 +6,11 @@ export const siteConfig = {
     "Official State Body for Racquetball in Rajasthan. RRA conducts structured tournaments, certification programs, and official training initiatives aligned with national and international standards.",
   url: process.env.APP_URL || "https://rajasthanracquetball.com",
   email: "rajasthanracquetball@gmail.com",
+  website: "rajasthanracquetball.com",
   phone: "+91 99289 62982",
+  phones: ["+91 99289 62982", "+91 95219 40184"],
+  registeredOffice: "Karani Colony, Durga Path, Ambabari, Jaipur (Raj.)",
+  headOffice: "650, Indra Colony, Nohar, Hanumangarh (Raj.)-335523",
   address: "Rajasthan, India",
   social: {
     facebook: "https://facebook.com/rajasthanracquetball",
@@ -117,8 +121,9 @@ export const siteImages = {
   logoLarge: "/images/rra-logo-2-1024x995.webp",
   favicon: "/images/cropped-rra-logo-32x32.webp",
   banner: "/images/LED_Banner_2240x128px-Road-to-Chengdu3-1024x59.png",
-  about: "/images/rra/rra-affiliation-poster.jpg",
+  about: "/images/rra/about-racquetball-2026-06-22.jpg",
   president: "/images/rra/portrait-aamir-khan.jpg",
+  generalSecretary: "/images/asishpooniawalaimage.jpeg",
   social: {
     facebook: "/images/fb-1-1024x1024.webp",
     instagram: "/images/Instagram_icon.png-1024x1024.webp",
@@ -132,20 +137,27 @@ export const siteImages = {
   },
   court: {
     indoor: "/images/rra/training-camp-court.jpg",
+    indoorSlider: [
+      "/images/rra/indoor-court-1.jpg",
+      "/images/rra/indoor-court-2.jpg",
+    ],
     outdoor: "/images/rra/outdoor-court-facility.jpg",
+    outdoorSlider: [
+      "/images/rra/outdoor-court-1.jpg",
+      "/images/rra/outdoor-court-2.jpg",
+    ],
   },
   sponsors: [
-    { name: "Brightmoon", logo: "/images/brightmoon.jpeg" },
-    { name: "EMASA", logo: "/images/emasa1.jpeg" },
+    { name: "Brightmoon Learning Solutions", logo: "/images/sponsor-logo1.jpeg" },
+    { name: "Eagle Martial Arts Sports Association", logo: "/images/sponsor-logo-eagle.jpeg" },
   ],
   federations: [
     { name: "Indian Racquetball Association", logo: "/images/indianrracqasso-1.jpg" },
     { name: "International Racquetball Federation", logo: "/images/irflogo2.jpeg" },
-    { name: "International Olympic Committee", logo: "/images/olympiccouncil.jpeg" },
-    { name: "The World Games", logo: "/images/theworldgames.webp" },
-    { name: "TWG 2022", logo: "/images/TWG-2022-edited-1.png" },
     { name: "ARF", logo: "/images/logo-arf-bicolor-raqueta.png" },
     { name: "International Federation", logo: "/images/international.webp" },
+    { name: "The World Games", logo: "/images/theworldgames.webp" },
+    { name: "International Olympic Committee", logo: "/images/olympiccouncil.jpeg" },
   ],
   gallery: [
     { title: "State Championship Poster", src: "/images/rra/poster-state-championship-2026.jpg", category: "Tournament" },
@@ -166,7 +178,8 @@ export const siteImages = {
   rra: {
     poster: "/images/rra/poster-state-championship-2026.jpg",
     affiliationPoster: "/images/rra/rra-affiliation-poster.jpg",
-    leadershipBanner: "/images/rra/leadership-team-banner.jpg",
+    leadershipBanner: "/images/rra/about-racquetball-2026-06-22.jpg",
+    leadershipCardsBanner: "/images/rra/leadership-team-2026-06-22.jpg",
     physioBanner: "/images/rra/physio-abpt-banner.jpg",
   },
 };
@@ -208,23 +221,24 @@ export type ExecutiveMember = {
   photo: string;
   description: string;
   badge?: string;
+  positions?: { role: string; organization: string }[];
 };
 
 export const executiveCommittee: ExecutiveMember[] = [
+  {
+    name: "Mr. Ravindra Singh Bhati",
+    role: "MLA",
+    badge: "Support By RRA",
+    photo: "/images/rra/portrait-ravindra-bhati.jpg",
+    description:
+      "Supports RRA initiatives, district coordination, and statewide promotion of racquetball development programs.",
+  },
   {
     name: "Mr. Aamir Khan",
     role: "President",
     photo: "/images/rra/portrait-aamir-khan.jpg",
     description:
       "Provides overall leadership and strategic direction for RRA operations and development initiatives across Rajasthan.",
-  },
-  {
-    name: "Mr. Ravindra Singh Bhati",
-    role: "Vice President",
-    badge: "Support By RRA",
-    photo: "/images/rra/portrait-ravindra-bhati.jpg",
-    description:
-      "Supports RRA initiatives, district coordination, and statewide promotion of racquetball development programs.",
   },
   {
     name: "Mr. Ajay Singh Meena",
@@ -234,11 +248,29 @@ export const executiveCommittee: ExecutiveMember[] = [
       "Assists in tournament planning, player outreach, and strengthening racquetball at the district level across Rajasthan.",
   },
   {
-    name: "Mr. Aashish Poonia",
-    role: "General Secretary",
-    photo: "/images/asishpooniawalaimage.jpeg",
+    name: "Mr. Ravi Singh Rajput",
+    role: "Vice President",
+    photo: "/images/rra/portrait-ravi-singh-rajput.jpg",
     description:
-      "Manages administrative affairs, membership records, and official correspondence with the Indian Racquetball Association.",
+      "Represents the Rajasthan Racquetball Association and supports executive leadership in statewide racquetball development and governance.",
+  },
+  {
+    name: "Mr. Aashish Poonia",
+    role: "Founder & General Secretary",
+    photo: "/images/asishpooniawalaimage.jpeg",
+    positions: [
+      { role: "Founder & General Secretary", organization: "Rajasthan Racquetball Association" },
+      { role: "Vice President", organization: "Indian Racquetball Association" },
+    ],
+    description:
+      "Leads RRA administration, membership operations, and national-level coordination with the Indian Racquetball Association.",
+  },
+  {
+    name: "Mr. Suresh Kumar",
+    role: "Joint Secretary",
+    photo: "/images/rra/portrait-suresh-kumar.jpg",
+    description:
+      "Supports the Rajasthan Racquetball Association in administrative coordination, records, and executive committee operations.",
   },
   {
     name: "Mr. Manoj Choudhary",
@@ -251,12 +283,12 @@ export const executiveCommittee: ExecutiveMember[] = [
 
 export const physioPartners = [
   {
-    name: "ABPT — High Performance Sports Science Centre",
-    director: "Ankit Bhardwaj",
+    name: "Ankit Bhardwaj",
+    organization: "ABPT — High Performance Sports Science Centre",
     role: "Head Physio, Rajasthan Racquetball Association",
+    photo: "/images/rra/portrait-ankit-bhardwaj.jpg",
     location: "Jaipur",
     phone: "+91 99289 62982",
-    banner: "/images/rra/physio-abpt-banner.jpg",
     services: [
       "Sports injury assessment & rehabilitation",
       "Pre-competition screening",
@@ -269,6 +301,7 @@ export const physioPartners = [
 export const districtLogos: Record<string, string> = {
   Alwar: "/images/rra/district-alwar-logo.jpg",
   Dausa: "/images/rra/district-dausa-logo.jpg",
+  Hanumangarh: "/images/rra/district-hanumangarh-logo.jpg",
   Jodhpur: "/images/rra/district-jodhpur-logo.jpg",
   Sirohi: "/images/rra/district-sirohi-logo.jpg",
 };
@@ -379,6 +412,72 @@ export const courtSpecifications = {
     ],
   },
 };
+
+export type YoutubeMediaItem = {
+  title: string;
+  description: string;
+  category: string;
+  url: string;
+  videoId?: string;
+  thumbnail?: string;
+  kind: "channel" | "video" | "short";
+};
+
+export const youtubeMedia: YoutubeMediaItem[] = [
+  {
+    kind: "channel",
+    title: "Rajasthan Racquetball Association",
+    description: "Official YouTube channel — subscribe for updates, highlights, and training content.",
+    category: "Channel",
+    url: "https://www.youtube.com/@rajasthanracquetball",
+    thumbnail: "/images/yt-image-1.png",
+  },
+  {
+    kind: "video",
+    videoId: "pLGlTGkzzIQ",
+    thumbnail: "/images/youtube/pLGlTGkzzIQ.jpg",
+    title: "RRA on YouTube",
+    description: "Watch on the official Rajasthan Racquetball Association channel.",
+    category: "Video",
+    url: "https://youtu.be/pLGlTGkzzIQ",
+  },
+  {
+    kind: "video",
+    videoId: "7Acp9ngn6E8",
+    thumbnail: "/images/youtube/7Acp9ngn6E8.jpg",
+    title: "RRA on YouTube",
+    description: "Watch on the official Rajasthan Racquetball Association channel.",
+    category: "Video",
+    url: "https://youtu.be/7Acp9ngn6E8",
+  },
+  {
+    kind: "short",
+    videoId: "tscx8UhkHfk",
+    thumbnail: "/images/youtube/tscx8UhkHfk.jpg",
+    title: "RRA Short",
+    description: "Quick racquetball update from RRA.",
+    category: "Short",
+    url: "https://www.youtube.com/shorts/tscx8UhkHfk",
+  },
+  {
+    kind: "short",
+    videoId: "ZEGnOKNleeE",
+    thumbnail: "/images/youtube/ZEGnOKNleeE.jpg",
+    title: "RRA Short",
+    description: "Quick racquetball update from RRA.",
+    category: "Short",
+    url: "https://www.youtube.com/shorts/ZEGnOKNleeE",
+  },
+  {
+    kind: "short",
+    videoId: "gKnvRspXOLw",
+    thumbnail: "/images/youtube/gKnvRspXOLw.jpg",
+    title: "RRA Short",
+    description: "Quick racquetball update from RRA.",
+    category: "Short",
+    url: "https://www.youtube.com/shorts/gKnvRspXOLw",
+  },
+];
 
 export const rajasthanDistricts = [
   "Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara",
