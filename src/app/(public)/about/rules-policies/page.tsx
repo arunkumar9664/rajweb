@@ -85,7 +85,7 @@ export default function RulesPoliciesPage() {
 
         <section className="mt-16">
           <h2 className="mb-6 text-2xl font-extrabold text-primary">Official Documents</h2>
-          <div className="overflow-hidden rounded-xl border border-slate-200">
+          <div className="overflow-x-auto rounded-xl border border-slate-200">
             <table className="w-full text-left text-sm">
               <thead className="bg-primary text-white">
                 <tr>

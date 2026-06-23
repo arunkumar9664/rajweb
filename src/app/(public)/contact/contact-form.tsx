@@ -5,9 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Button } from "@/shared/components/ui/button";
-import { Input } from "@/shared/components/ui/input";
-import { Label } from "@/shared/components/ui/label";
-import { Textarea } from "@/shared/components/ui/textarea";
+import { FormBuilder } from "@/shared/components/ui/form-builder";
 import { apiPost, handleApiFetch } from "@/lib/api-client";
 
 const contactSchema = z.object({
@@ -44,33 +42,17 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid gap-6 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="name">Full Name</Label>
-          <Input id="name" placeholder="Your full name" {...register("name")} />
-          {errors.name && <p className="text-sm text-secondary">{errors.name.message}</p>}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" type="email" placeholder="you@example.com" {...register("email")} />
-          {errors.email && <p className="text-sm text-secondary">{errors.email.message}</p>}
-        </div>
-      </div>
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input id="phone" type="tel" placeholder="+91 XXXXX XXXXX" {...register("phone")} />
-          {errors.phone && <p className="text-sm text-secondary">{errors.phone.message}</p>}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="subject">Subject</Label>
-          <Input id="subject" placeholder="How can we help?" {...register("subject")} />
-          {errors.subject && <p className="text-sm text-secondary">{errors.subject.message}</p>}
-        </div>
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="message">Message</Label>
-        <Textarea id="message" placeholder="Write your message here..." {...register("message")} />
-        {errors.message && <p className="text-sm text-secondary">{errors.message.message}</p>}
+        <FormBuilder
+          register={register}
+          errors={errors}
+          fields={[
+            { name: "name", label: "Full Name", placeholder: "Your full name" },
+            { name: "email", label: "Email Address", type: "email", placeholder: "you@example.com" },
+            { name: "phone", label: "Phone Number", type: "tel", placeholder: "+91 XXXXX XXXXX" },
+            { name: "subject", label: "Subject", placeholder: "How can we help?" },
+            { name: "message", label: "Message", type: "textarea", placeholder: "Write your message here...", className: "sm:col-span-2" }
+          ]}
+        />
       </div>
       <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
         {isSubmitting ? "Sending..." : "Send Message"}

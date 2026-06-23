@@ -37,39 +37,52 @@ export default function PhysioPartnersPage() {
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {physioPartners.map((partner) => (
-            <Card key={partner.name} className="overflow-hidden">
-              <MediaImage
-                src={partner.photo}
-                alt={partner.name}
-                aspect="portrait"
-                fit="cover"
-                rounded={false}
-                className="object-top"
-              />
-              <CardHeader>
-                <CardTitle className="text-lg">{partner.name}</CardTitle>
+            <Card key={partner.name} className="overflow-hidden transition-all hover:shadow-md">
+              <div className="relative p-2 pb-0">
+                <MediaImage
+                  src={partner.photo}
+                  alt={partner.name}
+                  aspect="square"
+                  fit="cover"
+                  rounded={true}
+                  className="object-top shadow-sm"
+                />
+              </div>
+              <CardHeader className="text-center">
+                <CardTitle className="text-xl text-primary">{partner.name}</CardTitle>
                 <p className="text-sm font-semibold text-secondary">{partner.role}</p>
-                <p className="text-xs text-slate-500">{partner.organization}</p>
+                <p className="mt-1 text-xs text-slate-500">{partner.organization}</p>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <MapPin className="h-4 w-4 shrink-0 text-accent" />
-                  {partner.location}, Rajasthan
+              <CardContent className="space-y-5 px-6 pb-6">
+                <div className="flex flex-col gap-3 rounded-lg bg-slate-50 p-4">
+                  <div className="flex items-center gap-3 text-sm text-slate-700">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
+                      <MapPin className="h-4 w-4 text-accent" />
+                    </div>
+                    {partner.location}, Rajasthan
+                  </div>
+                  <a
+                    href={`tel:${partner.phone.replace(/\s/g, "")}`}
+                    className="flex items-center gap-3 text-sm text-slate-700 hover:text-secondary transition-colors"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
+                      <Phone className="h-4 w-4 text-accent" />
+                    </div>
+                    {partner.phone}
+                  </a>
                 </div>
-                <a
-                  href={`tel:${partner.phone.replace(/\s/g, "")}`}
-                  className="flex items-center gap-2 text-sm text-slate-600 hover:text-secondary"
-                >
-                  <Phone className="h-4 w-4 shrink-0 text-accent" />
-                  {partner.phone}
-                </a>
-                <ul className="space-y-1 border-t border-slate-100 pt-4">
-                  {partner.services.map((service) => (
-                    <li key={service} className="text-sm text-slate-500">
-                      • {service}
-                    </li>
-                  ))}
-                </ul>
+
+                <div>
+                  <h4 className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-400">Services</h4>
+                  <ul className="space-y-2">
+                    {partner.services.map((service) => (
+                      <li key={service} className="flex items-start gap-2 text-sm text-slate-600">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-secondary/60" />
+                        <span>{service}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </CardContent>
             </Card>
           ))}

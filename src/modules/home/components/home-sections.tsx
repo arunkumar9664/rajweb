@@ -21,7 +21,7 @@ export function LatestNews() {
             <Link href="/media/news">All News <ArrowRight className="ml-2 h-4 w-4" /></Link>
           </Button>
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
           {news.map((item) => (
             <Link key={item.id} href={`/media/news`} className="group rounded-xl border border-slate-200 bg-background p-6 transition-shadow hover:shadow-md">
               <span className="text-xs font-semibold uppercase text-secondary">{item.category}</span>

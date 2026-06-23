@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
+import { FormBuilder } from "@/shared/components/ui/form-builder";
 import { LogoImage } from "@/shared/components/ui/media-image";
 import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
 import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
@@ -101,16 +102,14 @@ function LoginForm() {
         <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
           <ComingSoonBanner feature="Admin portal login" />
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="admin@rajasthanracquetball.com" {...register("email")} />
-              {errors.email && <p className="text-sm text-secondary">{errors.email.message}</p>}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="••••••••" {...register("password")} />
-              {errors.password && <p className="text-sm text-secondary">{errors.password.message}</p>}
-            </div>
+            <FormBuilder
+              register={register}
+              errors={errors}
+              fields={[
+                { name: "email", label: "Email", type: "email", placeholder: "admin@rajasthanracquetball.com" },
+                { name: "password", label: "Password", type: "password", placeholder: "••••••••" }
+              ]}
+            />
             {error && (
               <div className="rounded-md bg-secondary/10 px-4 py-3 text-sm text-secondary">{error}</div>
             )}

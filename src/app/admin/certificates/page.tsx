@@ -5,7 +5,7 @@ import { playerCertDistrictWhere, coachCertDistrictWhere } from "@/security/rbac
 import { hasPermission } from "@/security/rbac/permissions";
 import { getStorage } from "@/infrastructure/storage/storage-adapter";
 import { formatDate } from "@/lib/utils";
-import { IssueCertificateButton } from "@/shared/components/admin/issue-player-certificate-modal";
+import { IssueCertificateButton } from "@/shared/components/admin/issue-certificate-button";
 
 async function getCertificates(districtId?: string) {
   try {
@@ -54,6 +54,12 @@ async function getEligiblePlayers(districtId?: string) {
   }
 }
 
+import { DashboardCard } from "@/shared/components/ui/dashboard-card";
+import { DataTable, ColumnDef } from "@/shared/components/ui/data-table";
+
+type PlayerCertWithPlayer = Awaited<ReturnType<typeof getCertificates>>["playerCerts"][number];
+type CoachCertWithCoach = Awaited<ReturnType<typeof getCertificates>>["coachCerts"][number];
+
 export default async function AdminCertificatesPage() {
   const { districtId, user } = await requireAdminScope(PERMISSIONS.CERTIFICATES_READ);
   const [{ playerCerts, coachCerts }, eligiblePlayers] = await Promise.all([
@@ -62,6 +68,54 @@ export default async function AdminCertificatesPage() {
   ]);
   const storage = getStorage();
   const canIssue = hasPermission(user, PERMISSIONS.CERTIFICATES_ISSUE);
+
+  const playerColumns: ColumnDef<PlayerCertWithPlayer>[] = [
+    { header: "Cert No.", accessorKey: "certificateNumber", className: "font-mono text-xs" },
+    { header: "Player", cell: (c) => c.player.name },
+    { header: "Issued", cell: (c) => formatDate(c.issuedAt) },
+    {
+      header: "PDF",
+      cell: (c) =>
+        c.pdfPath ? (
+          <a href={storage.getUrl(c.pdfPath)} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+            View
+          </a>
+        ) : (
+          <a
+            href={`/verify?certificateNumber=${encodeURIComponent(c.certificateNumber)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            Verify
+          </a>
+        ),
+    },
+  ];
+
+  const coachColumns: ColumnDef<CoachCertWithCoach>[] = [
+    { header: "Cert No.", accessorKey: "certificateNumber", className: "font-mono text-xs" },
+    { header: "Coach", cell: (c) => c.coach.name },
+    { header: "Issued", cell: (c) => formatDate(c.issuedAt) },
+    {
+      header: "PDF",
+      cell: (c) =>
+        c.pdfPath ? (
+          <a href={storage.getUrl(c.pdfPath)} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+            View
+          </a>
+        ) : (
+          <a
+            href={`/verify?certificateNumber=${encodeURIComponent(c.certificateNumber)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            Verify
+          </a>
+        ),
+    },
+  ];
 
   return (
     <div>
@@ -73,106 +127,22 @@ export default async function AdminCertificatesPage() {
         {canIssue && <IssueCertificateButton players={eligiblePlayers} label="Issue Certificate" />}
       </div>
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
-          <CardHeader><CardTitle>Player Certificates ({playerCerts.length})</CardTitle></CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b text-left">
-                    <th className="pb-2 pr-3 font-semibold text-slate-600">Cert No.</th>
-                    <th className="pb-2 pr-3 font-semibold text-slate-600">Player</th>
-                    <th className="pb-2 pr-3 font-semibold text-slate-600">Issued</th>
-                    <th className="pb-2 font-semibold text-slate-600">PDF</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {playerCerts.length === 0 ? (
-                    <tr>
-                      <td colSpan={4} className="py-6 text-center text-slate-500">
-                        No player certificates issued yet
-                      </td>
-                    </tr>
-                  ) : (
-                    playerCerts.map((c) => (
-                      <tr key={c.id} className="border-b border-slate-100">
-                        <td className="py-2 pr-3 font-mono text-xs">{c.certificateNumber}</td>
-                        <td className="py-2 pr-3">{c.player.name}</td>
-                        <td className="py-2 pr-3">{formatDate(c.issuedAt)}</td>
-                        <td className="py-2">
-                          {c.pdfPath ? (
-                            <a href={storage.getUrl(c.pdfPath)} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
-                              View
-                            </a>
-                          ) : (
-                            <a
-                              href={`/verify?certificateNumber=${encodeURIComponent(c.certificateNumber)}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-accent hover:underline"
-                            >
-                              Verify
-                            </a>
-                          )}
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader><CardTitle>Coach Certificates ({coachCerts.length})</CardTitle></CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b text-left">
-                    <th className="pb-2 pr-3 font-semibold text-slate-600">Cert No.</th>
-                    <th className="pb-2 pr-3 font-semibold text-slate-600">Coach</th>
-                    <th className="pb-2 pr-3 font-semibold text-slate-600">Issued</th>
-                    <th className="pb-2 font-semibold text-slate-600">PDF</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {coachCerts.length === 0 ? (
-                    <tr>
-                      <td colSpan={4} className="py-6 text-center text-slate-500">
-                        No coach certificates issued yet
-                      </td>
-                    </tr>
-                  ) : (
-                    coachCerts.map((c) => (
-                      <tr key={c.id} className="border-b border-slate-100">
-                        <td className="py-2 pr-3 font-mono text-xs">{c.certificateNumber}</td>
-                        <td className="py-2 pr-3">{c.coach.name}</td>
-                        <td className="py-2 pr-3">{formatDate(c.issuedAt)}</td>
-                        <td className="py-2">
-                          {c.pdfPath ? (
-                            <a href={storage.getUrl(c.pdfPath)} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
-                              View
-                            </a>
-                          ) : (
-                            <a
-                              href={`/verify?certificateNumber=${encodeURIComponent(c.certificateNumber)}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-accent hover:underline"
-                            >
-                              Verify
-                            </a>
-                          )}
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
+        <DashboardCard title={`Player Certificates (${playerCerts.length})`}>
+          <DataTable
+            data={playerCerts}
+            columns={playerColumns}
+            keyExtractor={(c) => c.id}
+            emptyTitle="No player certificates issued yet"
+          />
+        </DashboardCard>
+        <DashboardCard title={`Coach Certificates (${coachCerts.length})`}>
+          <DataTable
+            data={coachCerts}
+            columns={coachColumns}
+            keyExtractor={(c) => c.id}
+            emptyTitle="No coach certificates issued yet"
+          />
+        </DashboardCard>
       </div>
     </div>
   );

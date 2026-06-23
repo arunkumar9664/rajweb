@@ -21,7 +21,7 @@ export function HeroSlider() {
   const slide = heroSlides[current];
 
   return (
-    <section className="relative h-[600px] overflow-hidden md:h-[700px]">
+    <section className="relative h-[500px] overflow-hidden sm:h-[600px] md:h-[700px]">
       {heroSlides.map((item, index) => (
         <div
           key={item.id}
@@ -49,20 +49,20 @@ export function HeroSlider() {
           <span className="mb-4 inline-block rounded-full bg-accent/20 px-4 py-1.5 text-sm font-semibold text-accent">
             {slide.subtitle}
           </span>
-          <h1 className="text-4xl font-extrabold leading-tight text-white md:text-5xl lg:text-6xl">
+          <h1 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
             {slide.title}
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-slate-300 md:text-xl">
+          <p className="mt-4 text-base leading-relaxed text-slate-300 sm:mt-6 sm:text-lg md:text-xl">
             {slide.description}
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Button variant="accent" size="lg" asChild>
+          <div className="mt-6 flex flex-wrap gap-3 sm:mt-8 sm:gap-4">
+            <Button variant="accent" size="lg" className="w-full sm:w-auto" asChild>
               <Link href={slide.cta.primary.href}>{slide.cta.primary.label}</Link>
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="border-white text-white hover:bg-white hover:text-primary"
+              className="w-full border-white text-white hover:bg-white hover:text-primary sm:w-auto"
               asChild
             >
               <Link href={slide.cta.secondary.href}>{slide.cta.secondary.label}</Link>
@@ -89,7 +89,7 @@ export function HeroSlider() {
       <button
         type="button"
         onClick={() => setCurrent((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+        className="absolute left-4 top-1/2 hidden -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:block"
         aria-label="Previous slide"
       >
         <ChevronLeft className="h-6 w-6" />
@@ -97,7 +97,7 @@ export function HeroSlider() {
       <button
         type="button"
         onClick={() => setCurrent((prev) => (prev + 1) % heroSlides.length)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+        className="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:block"
         aria-label="Next slide"
       >
         <ChevronRight className="h-6 w-6" />

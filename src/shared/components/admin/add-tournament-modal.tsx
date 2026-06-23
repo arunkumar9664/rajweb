@@ -36,7 +36,7 @@ const tournamentSchema = z
 
 type TournamentFormData = z.infer<typeof tournamentSchema>;
 
-function AddTournamentModal({
+export function AddTournamentModal({
   open,
   onClose,
   districts,
@@ -200,27 +200,5 @@ function AddTournamentModal({
         </CardContent>
       </Card>
     </div>
-  );
-}
-
-export function AddTournamentButton({
-  districts,
-  lockedDistrictId,
-}: {
-  districts: DistrictOption[];
-  lockedDistrictId?: string;
-}) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Add Tournament</Button>
-      <AddTournamentModal
-        open={open}
-        onClose={() => setOpen(false)}
-        districts={districts}
-        lockedDistrictId={lockedDistrictId}
-      />
-    </>
   );
 }

@@ -6,8 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CheckCircle, XCircle } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import { Input } from "@/shared/components/ui/input";
-import { Label } from "@/shared/components/ui/label";
+import { FormBuilder } from "@/shared/components/ui/form-builder";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import type { ApiResponse } from "@/lib/api-client";
 import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
@@ -117,24 +116,22 @@ export function VerifyForm() {
     <div className="space-y-6">
       <ComingSoonBanner feature="Certificate verification" />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="certificateNumber">Certificate / Player / Coach ID</Label>
-          <Input
-            id="certificateNumber"
-            placeholder="e.g. RRA-2025-PLR001 or PLR-TEST-001"
-            {...register("certificateNumber")}
-          />
-          {errors.certificateNumber && (
-            <p className="text-sm text-secondary">{errors.certificateNumber.message}</p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="qrCode">QR Code (optional)</Label>
-          <Input id="qrCode" placeholder="Scan or enter QR code" {...register("qrCode")} />
-          {errors.qrCode && (
-            <p className="text-sm text-secondary">{errors.qrCode.message}</p>
-          )}
-        </div>
+        <FormBuilder
+          register={register}
+          errors={errors}
+          fields={[
+            {
+              name: "certificateNumber",
+              label: "Certificate / Player / Coach ID",
+              placeholder: "e.g. RRA-2025-PLR001 or PLR-TEST-001",
+            },
+            {
+              name: "qrCode",
+              label: "QR Code (optional)",
+              placeholder: "Scan or enter QR code",
+            },
+          ]}
+        />
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Verifying..." : "Verify Certificate"}
         </Button>

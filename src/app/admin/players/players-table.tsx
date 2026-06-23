@@ -6,11 +6,12 @@ import { toast } from "sonner";
 import { Button } from "@/shared/components/ui/button";
 import { apiFetch, handleApiFetch } from "@/lib/api-client";
 import {
-  CertificateDetailsModal,
   IssuePlayerCertificateModal,
   type EligiblePlayer,
   type PlayerCertificateInfo,
 } from "@/shared/components/admin/issue-player-certificate-modal";
+import { CertificateDetailsModal } from "@/shared/components/admin/certificate-details-modal";
+import { DataTable, type ColumnDef } from "@/shared/components/ui/data-table";
 
 export type PlayerRow = EligiblePlayer & {
   status: string;
@@ -41,91 +42,79 @@ export function PlayersTable({ players }: { players: PlayerRow[] }) {
     }
   }
 
+  const columns: ColumnDef<PlayerRow>[] = [
+    { header: "Player ID", accessorKey: "playerId", className: "font-mono text-xs" },
+    { header: "Name", accessorKey: "name", className: "font-medium" },
+    { header: "District", accessorKey: "district" },
+    { header: "Email", accessorKey: "email" },
+    {
+      header: "Status",
+      cell: (player) => (
+        <span
+          className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+            player.status === "APPROVED"
+              ? "bg-green-100 text-green-700"
+              : player.status === "PENDING"
+              ? "bg-yellow-100 text-yellow-700"
+              : "bg-red-100 text-red-700"
+          }`}
+        >
+          {player.status}
+        </span>
+      ),
+    },
+    {
+      header: "Certificate",
+      cell: (player) =>
+        player.certificate ? (
+          <button
+            type="button"
+            onClick={() => setViewPlayer({ ...player, certificate: player.certificate! })}
+            className="text-left text-xs font-mono text-accent hover:underline"
+          >
+            {player.certificate.certificateNumber}
+          </button>
+        ) : (
+          <span className="text-slate-400">—</span>
+        ),
+    },
+    {
+      header: "Actions",
+      cell: (player) => (
+        <div className="flex flex-wrap gap-2">
+          {player.status === "PENDING" && (
+            <>
+              <Button size="sm" onClick={() => handleApproveReject(player, "approve")} disabled={!!loading}>
+                {loading === `${player.id}-approve` ? "..." : "Approve"}
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => handleApproveReject(player, "reject")} disabled={!!loading}>
+                {loading === `${player.id}-reject` ? "..." : "Reject"}
+              </Button>
+            </>
+          )}
+          {player.status === "APPROVED" && !player.certificate && (
+            <Button size="sm" variant="accent" onClick={() => setIssuePlayer(player)}>
+              Issue Cert
+            </Button>
+          )}
+          {player.certificate && (
+            <Button size="sm" variant="outline" onClick={() => setViewPlayer({ ...player, certificate: player.certificate! })}>
+              View Cert
+            </Button>
+          )}
+        </div>
+      ),
+    },
+  ];
+
   return (
     <>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-slate-200 text-left">
-              <th className="pb-3 pr-4 font-semibold text-slate-600">Player ID</th>
-              <th className="pb-3 pr-4 font-semibold text-slate-600">Name</th>
-              <th className="pb-3 pr-4 font-semibold text-slate-600">District</th>
-              <th className="pb-3 pr-4 font-semibold text-slate-600">Email</th>
-              <th className="pb-3 pr-4 font-semibold text-slate-600">Status</th>
-              <th className="pb-3 pr-4 font-semibold text-slate-600">Certificate</th>
-              <th className="pb-3 font-semibold text-slate-600">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {players.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="py-8 text-center text-slate-500">
-                  No players registered yet
-                </td>
-              </tr>
-            ) : (
-              players.map((player) => (
-                <tr key={player.id} className="border-b border-slate-100">
-                  <td className="py-3 pr-4 font-mono text-xs">{player.playerId}</td>
-                  <td className="py-3 pr-4 font-medium">{player.name}</td>
-                  <td className="py-3 pr-4">{player.district}</td>
-                  <td className="py-3 pr-4">{player.email}</td>
-                  <td className="py-3 pr-4">
-                    <span
-                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-                        player.status === "APPROVED"
-                          ? "bg-green-100 text-green-700"
-                          : player.status === "PENDING"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {player.status}
-                    </span>
-                  </td>
-                  <td className="py-3 pr-4">
-                    {player.certificate ? (
-                      <button
-                        type="button"
-                        onClick={() => setViewPlayer({ ...player, certificate: player.certificate! })}
-                        className="text-left text-xs font-mono text-accent hover:underline"
-                      >
-                        {player.certificate.certificateNumber}
-                      </button>
-                    ) : (
-                      <span className="text-slate-400">—</span>
-                    )}
-                  </td>
-                  <td className="py-3">
-                    <div className="flex flex-wrap gap-2">
-                      {player.status === "PENDING" && (
-                        <>
-                          <Button size="sm" onClick={() => handleApproveReject(player, "approve")} disabled={!!loading}>
-                            {loading === `${player.id}-approve` ? "..." : "Approve"}
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={() => handleApproveReject(player, "reject")} disabled={!!loading}>
-                            {loading === `${player.id}-reject` ? "..." : "Reject"}
-                          </Button>
-                        </>
-                      )}
-                      {player.status === "APPROVED" && !player.certificate && (
-                        <Button size="sm" variant="accent" onClick={() => setIssuePlayer(player)}>
-                          Issue Cert
-                        </Button>
-                      )}
-                      {player.certificate && (
-                        <Button size="sm" variant="outline" onClick={() => setViewPlayer({ ...player, certificate: player.certificate! })}>
-                          View Cert
-                        </Button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        data={players}
+        columns={columns}
+        keyExtractor={(p) => p.id}
+        emptyTitle="No players registered yet"
+      />
 
       {viewPlayer && <CertificateDetailsModal player={viewPlayer} onClose={() => setViewPlayer(null)} />}
       <IssuePlayerCertificateModal

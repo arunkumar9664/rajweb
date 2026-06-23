@@ -47,45 +47,41 @@ async function getMemberships(districtId?: string) {
   }
 }
 
+import { DashboardCard } from "@/shared/components/ui/dashboard-card";
+import { DataTable, ColumnDef } from "@/shared/components/ui/data-table";
+
 function MembershipTable({ title, rows }: { title: string; rows: MembershipRow[] }) {
+  const columns: ColumnDef<MembershipRow>[] = [
+    { header: "ID", accessorKey: "membershipId", className: "font-mono text-xs" },
+    { header: "Name", accessorKey: "name", className: "font-medium" },
+    { header: "District", accessorKey: "district" },
+    {
+      header: "Status",
+      cell: (item) => (
+        <span
+          className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+            item.status === "APPROVED" || item.status === "ACTIVE"
+              ? "bg-green-100 text-green-700"
+              : item.status === "PENDING"
+              ? "bg-yellow-100 text-yellow-700"
+              : "bg-red-100 text-red-700"
+          }`}
+        >
+          {item.status}
+        </span>
+      ),
+    },
+  ];
+
   return (
-    <Card>
-      <CardHeader><CardTitle>{title} ({rows.length})</CardTitle></CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-slate-200 text-left">
-                <th className="pb-3 pr-4 font-semibold text-slate-600">ID</th>
-                <th className="pb-3 pr-4 font-semibold text-slate-600">Name</th>
-                <th className="pb-3 pr-4 font-semibold text-slate-600">District</th>
-                <th className="pb-3 font-semibold text-slate-600">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.length === 0 ? (
-                <tr><td colSpan={4} className="py-6 text-center text-slate-500">No applications yet</td></tr>
-              ) : (
-                rows.map((item) => (
-                  <tr key={item.id} className="border-b border-slate-100">
-                    <td className="py-3 pr-4 font-mono text-xs">{item.membershipId}</td>
-                    <td className="py-3 pr-4 font-medium">{item.name}</td>
-                    <td className="py-3 pr-4">{item.district}</td>
-                    <td className="py-3">
-                      <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-                        item.status === "APPROVED" || item.status === "ACTIVE" ? "bg-green-100 text-green-700" :
-                        item.status === "PENDING" ? "bg-yellow-100 text-yellow-700" :
-                        "bg-red-100 text-red-700"
-                      }`}>{item.status}</span>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
+    <DashboardCard title={`${title} (${rows.length})`}>
+      <DataTable
+        data={rows}
+        columns={columns}
+        keyExtractor={(item) => item.id}
+        emptyTitle="No applications yet"
+      />
+    </DashboardCard>
   );
 }
 

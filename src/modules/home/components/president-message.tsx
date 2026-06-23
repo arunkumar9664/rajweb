@@ -18,7 +18,7 @@ export function PresidentMessage() {
               className="object-top"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
-            <div className="absolute -bottom-4 -right-4 h-32 w-32 rounded-2xl bg-accent/20" />
+            <div className="absolute -bottom-4 right-0 h-32 w-32 rounded-2xl bg-accent/20 sm:-right-4" />
           </div>
           <div>
             <span className="text-sm font-bold uppercase tracking-wider text-accent">Leadership</span>
@@ -53,7 +53,7 @@ export function GeneralSecretaryMessage() {
               className="object-top"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
-            <div className="absolute -bottom-4 -right-4 h-32 w-32 rounded-2xl bg-accent/20" />
+            <div className="absolute -bottom-4 right-0 h-32 w-32 rounded-2xl bg-accent/20 sm:-right-4" />
           </div>
           <div>
             <span className="text-sm font-bold uppercase tracking-wider text-accent">Leadership</span>
