@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { MapPin, Phone } from "lucide-react";
+// import { MapPin, Phone } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
-import { MediaImage } from "@/shared/components/ui/media-image";
-import { physioPartners, siteImages } from "@/shared/config/site";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
+// import { MediaImage } from "@/shared/components/ui/media-image";
+// import { physioPartners, siteImages } from "@/shared/config/site";
 
 export const metadata: Metadata = {
   title: "Physio Partners",
@@ -20,9 +21,10 @@ export default function PhysioPartnersPage() {
         description="Official physiotherapy partners supporting RRA athletes with injury prevention, treatment, and recovery services."
       />
       <PageContent>
-        <MediaImage
+        <ComingSoonBanner feature="Physio partners" />
+        {/* <MediaImage
           src={siteImages.rra.leadershipCardsBanner}
-          alt="RRA leadership — President Aamir Khan, General Secretary Aashish Poonia, and Head Physio Ankit Bhardwaj"
+          alt="Rajasthan Racquetball Association official banner and affiliations"
           aspect="wide"
           fit="contain"
           containerClassName="mb-10 bg-white ring-1 ring-slate-200"
@@ -86,7 +88,7 @@ export default function PhysioPartnersPage() {
               </CardContent>
             </Card>
           ))}
-        </div>
+        </div> */}
       </PageContent>
     </>
   );

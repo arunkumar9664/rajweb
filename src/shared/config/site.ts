@@ -8,7 +8,10 @@ export const siteConfig = {
   email: "rajasthanracquetball@gmail.com",
   website: "rajasthanracquetball.com",
   phone: "+91 99289 62982",
-  phones: ["+91 99289 62982", "+91 95219 40184"],
+  phones: [
+    "+91 99289 62982",
+    // "+91 95219 40184",
+  ],
   registeredOffice: "Karani Colony, Durga Path, Ambabari, Jaipur (Raj.)",
   headOffice: "650, Indra Colony, Nohar, Hanumangarh (Raj.)-335523",
   address: "Rajasthan, India",
@@ -23,6 +26,12 @@ export const siteConfig = {
     secondary: "#DC2626",
     accent: "#F59E0B",
     background: "#F8FAFC",
+  },
+  /** Official website development partner — footer attribution */
+  developer: {
+    name: "InnovateX Technology Pvt. Ltd.",
+    shortName: "InnovateX Technology",
+    url: "https://innovatex-technology.com/",
   },
 };
 
@@ -109,6 +118,7 @@ export const navigation = {
       links: [
         { name: "RTI & Governance", href: "/governance/rti" },
         { name: "Anti-Doping Compliance", href: "/governance/anti-doping" },
+        { name: "Privacy Policy", href: "/governance/privacy-policy" },
         { name: "Rules & Policies", href: "/about/rules-policies" },
         { name: "Contact Us", href: "/contact" },
       ],
@@ -116,12 +126,15 @@ export const navigation = {
   ],
 };
 
+/** Official RRA affiliation / leadership banner (`public/images/RRA.jpeg`). */
+export const RRA_OFFICIAL_BANNER = "/images/RRA.jpeg";
+
 export const siteImages = {
   logo: "/images/cropped-rra-logo.webp",
   logoLarge: "/images/rra-logo-2-1024x995.webp",
   favicon: "/images/cropped-rra-logo-32x32.webp",
   banner: "/images/LED_Banner_2240x128px-Road-to-Chengdu3-1024x59.png",
-  about: "/images/rra/about-racquetball-2026-06-22.jpg",
+  about: RRA_OFFICIAL_BANNER,
   president: "/images/rra/portrait-aamir-khan.jpg",
   generalSecretary: "/images/asishpooniawalaimage.jpeg",
   social: {
@@ -172,15 +185,15 @@ export const siteImages = {
     { title: "State Team with Officials", src: "/images/rra/team-group-02.jpg", category: "Team" },
     { title: "Outdoor Court Play", src: "/images/rra/outdoor-court-action.jpg", category: "Facilities" },
     { title: "Outdoor Racquetball Facility", src: "/images/rra/outdoor-court-facility.jpg", category: "Facilities" },
-    { title: "RRA Leadership Team", src: "/images/rra/leadership-team-banner.jpg", category: "Leadership" },
-    { title: "RRA Affiliation & Officials", src: "/images/rra/rra-affiliation-poster.jpg", category: "Leadership" },
+    { title: "RRA Official Banner", src: RRA_OFFICIAL_BANNER, category: "Leadership" },
+    { title: "RRA Affiliations", src: RRA_OFFICIAL_BANNER, category: "Leadership" },
   ],
   rra: {
     poster: "/images/rra/poster-state-championship-2026.jpg",
-    affiliationPoster: "/images/rra/rra-affiliation-poster.jpg",
-    leadershipBanner: "/images/rra/about-racquetball-2026-06-22.jpg",
-    leadershipCardsBanner: "/images/rra/leadership-team-2026-06-22.jpg",
-    physioBanner: "/images/rra/physio-abpt-banner.jpg",
+    affiliationPoster: RRA_OFFICIAL_BANNER,
+    leadershipBanner: RRA_OFFICIAL_BANNER,
+    leadershipCardsBanner: RRA_OFFICIAL_BANNER,
+    physioBanner: RRA_OFFICIAL_BANNER,
   },
 };
 
@@ -225,35 +238,35 @@ export type ExecutiveMember = {
 };
 
 export const executiveCommittee: ExecutiveMember[] = [
-  {
-    name: "Mr. Ravindra Singh Bhati",
-    role: "MLA",
-    badge: "Support By RRA",
-    photo: "/images/rra/portrait-ravindra-bhati.jpg",
-    description:
-      "Supports RRA initiatives, district coordination, and statewide promotion of racquetball development programs.",
-  },
-  {
-    name: "Mr. Aamir Khan",
-    role: "President",
-    photo: "/images/rra/portrait-aamir-khan.jpg",
-    description:
-      "Provides overall leadership and strategic direction for RRA operations and development initiatives across Rajasthan.",
-  },
-  {
-    name: "Mr. Ajay Singh Meena",
-    role: "Vice President",
-    photo: "/images/rra/portrait-ajay-meena.jpg",
-    description:
-      "Assists in tournament planning, player outreach, and strengthening racquetball at the district level across Rajasthan.",
-  },
-  {
-    name: "Mr. Ravi Singh Rajput",
-    role: "Vice President",
-    photo: "/images/rra/portrait-ravi-singh-rajput.jpg",
-    description:
-      "Represents the Rajasthan Racquetball Association and supports executive leadership in statewide racquetball development and governance.",
-  },
+  // {
+  //   name: "Mr. Ravindra Singh Bhati",
+  //   role: "MLA",
+  //   badge: "Support By RRA",
+  //   photo: "/images/rra/portrait-ravindra-bhati.jpg",
+  //   description:
+  //     "Supports RRA initiatives, district coordination, and statewide promotion of racquetball development programs.",
+  // },
+  // {
+  //   name: "Mr. Aamir Khan",
+  //   role: "President",
+  //   photo: "/images/rra/portrait-aamir-khan.jpg",
+  //   description:
+  //     "Provides overall leadership and strategic direction for RRA operations and development initiatives across Rajasthan.",
+  // },
+  // {
+  //   name: "Mr. Ajay Singh Meena",
+  //   role: "Vice President",
+  //   photo: "/images/rra/portrait-ajay-meena.jpg",
+  //   description:
+  //     "Assists in tournament planning, player outreach, and strengthening racquetball at the district level across Rajasthan.",
+  // },
+  // {
+  //   name: "Mr. Ravi Singh Rajput",
+  //   role: "Vice President",
+  //   photo: "/images/rra/portrait-ravi-singh-rajput.jpg",
+  //   description:
+  //     "Represents the Rajasthan Racquetball Association and supports executive leadership in statewide racquetball development and governance.",
+  // },
   {
     name: "Mr. Aashish Poonia",
     role: "Founder & General Secretary",
@@ -265,20 +278,20 @@ export const executiveCommittee: ExecutiveMember[] = [
     description:
       "Leads RRA administration, membership operations, and national-level coordination with the Indian Racquetball Association.",
   },
-  {
-    name: "Mr. Suresh Kumar",
-    role: "Joint Secretary",
-    photo: "/images/rra/portrait-suresh-kumar.jpg",
-    description:
-      "Supports the Rajasthan Racquetball Association in administrative coordination, records, and executive committee operations.",
-  },
-  {
-    name: "Mr. Manoj Choudhary",
-    role: "Treasurer",
-    photo: "/images/manoj-kumar-edited-1.webp",
-    description:
-      "Oversees financial management, budgeting, and transparent reporting of association funds.",
-  },
+  // {
+  //   name: "Mr. Suresh Kumar",
+  //   role: "Joint Secretary",
+  //   photo: "/images/rra/portrait-suresh-kumar.jpg",
+  //   description:
+  //     "Supports the Rajasthan Racquetball Association in administrative coordination, records, and executive committee operations.",
+  // },
+  // {
+  //   name: "Mr. Manoj Choudhary",
+  //   role: "Treasurer",
+  //   photo: "/images/manoj-kumar-edited-1.webp",
+  //   description:
+  //     "Oversees financial management, budgeting, and transparent reporting of association funds.",
+  // },
 ];
 
 export const physioPartners = [

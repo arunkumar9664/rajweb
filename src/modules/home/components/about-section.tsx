@@ -36,7 +36,7 @@ export function AboutSection() {
           <div className="space-y-6">
             <MediaImage
               src={siteImages.about}
-              alt="Rajasthan Racquetball Association"
+              alt="Rajasthan Racquetball Association official banner and affiliations"
               aspect="video"
               fit="contain"
               containerClassName="bg-white ring-1 ring-slate-200"

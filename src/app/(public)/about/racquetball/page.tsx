@@ -47,7 +47,7 @@ export default function AboutRacquetballPage() {
       <PageContent>
         <MediaImage
           src={siteImages.about}
-          alt="About Racquetball — RRA overview"
+          alt="Rajasthan Racquetball Association official banner and affiliations"
           aspect="video"
           fit="contain"
           priority

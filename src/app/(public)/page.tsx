@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import {
-  PresidentMessage,
+  // PresidentMessage,
   GeneralSecretaryMessage,
   TestimonialsSection,
   MembershipCTA,
@@ -33,7 +33,7 @@ export default function HomePage() {
       <StatsBar />
       <AboutSection />
       <LatestNews />
-      <PresidentMessage />
+      {/* <PresidentMessage /> */}
       <GeneralSecretaryMessage />
       <TestimonialsSection />
       <MembershipCTA />

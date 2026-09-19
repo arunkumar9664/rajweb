@@ -90,7 +90,7 @@ export function TournamentEventCard({ tournament }: { tournament: TournamentEven
           </div>
           <div className="flex items-center gap-2">
             <Phone className="h-4 w-4 shrink-0 text-accent" />
-            <span>99289-62982 · 9521940184</span>
+            <span>99289-62982{/* · 9521940184 */}</span>
           </div>
         </div>
 

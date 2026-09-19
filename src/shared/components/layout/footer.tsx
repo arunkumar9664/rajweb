@@ -114,13 +114,27 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-slate-400 sm:flex-row">
-          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="/governance/rti" className="hover:text-white">RTI</Link>
-            <Link href="/governance/anti-doping" className="hover:text-white">Anti-Doping</Link>
-            <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
+        <div className="mt-8 space-y-4 border-t border-white/10 pt-8">
+          <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-400 sm:flex-row">
+            <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+              <Link href="/governance/rti" className="hover:text-white">RTI</Link>
+              <Link href="/governance/anti-doping" className="hover:text-white">Anti-Doping</Link>
+              <Link href="/governance/privacy-policy" className="hover:text-white">Privacy Policy</Link>
+            </div>
           </div>
+          <p className="text-center text-xs text-slate-500">
+            Website designed &amp; developed by{" "}
+            <a
+              href={siteConfig.developer.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-slate-400 transition-colors hover:text-accent"
+              title={siteConfig.developer.name}
+            >
+              {siteConfig.developer.shortName}
+            </a>
+          </p>
         </div>
       </div>
     </footer>

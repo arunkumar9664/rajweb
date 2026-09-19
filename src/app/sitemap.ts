@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/governance/rti",
     "/governance/anti-doping",
+    "/governance/privacy-policy",
   ];
 
   return staticPages.map((path) => ({

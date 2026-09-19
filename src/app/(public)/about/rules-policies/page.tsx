@@ -48,7 +48,7 @@ const documents = [
   { name: "RRA Constitution & Bylaws", status: "Available on request" },
   { name: "Tournament Regulations", status: "Updated 2025" },
   { name: "Coach Certification Guidelines", status: "IRA Aligned" },
-  { name: "Privacy Policy", status: "Effective 2025" },
+  { name: "Privacy Policy", status: "Effective 2025", href: "/governance/privacy-policy" },
 ];
 
 export default function RulesPoliciesPage() {
@@ -96,7 +96,15 @@ export default function RulesPoliciesPage() {
               <tbody>
                 {documents.map((doc, index) => (
                   <tr key={doc.name} className={index % 2 === 0 ? "bg-white" : "bg-slate-50"}>
-                    <td className="px-6 py-4 font-medium text-primary">{doc.name}</td>
+                    <td className="px-6 py-4 font-medium text-primary">
+                      {"href" in doc && doc.href ? (
+                        <Link href={doc.href} className="text-secondary hover:underline">
+                          {doc.name}
+                        </Link>
+                      ) : (
+                        doc.name
+                      )}
+                    </td>
                     <td className="px-6 py-4 text-slate-600">{doc.status}</td>
                   </tr>
                 ))}
@@ -111,6 +119,9 @@ export default function RulesPoliciesPage() {
           </Button>
           <Button variant="outline" asChild>
             <Link href="/governance/rti">RTI & Governance</Link>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href="/governance/privacy-policy">Privacy Policy</Link>
           </Button>
         </div>
       </PageContent>

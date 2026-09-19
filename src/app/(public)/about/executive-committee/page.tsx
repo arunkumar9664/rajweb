@@ -3,7 +3,7 @@ import { Mail, Phone } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { MediaImage } from "@/shared/components/ui/media-image";
-import { siteConfig, executiveCommittee, siteImages } from "@/shared/config/site";
+import { siteConfig, executiveCommittee } from "@/shared/config/site";
 
 export const metadata: Metadata = {
   title: "Executive Committee",
@@ -20,14 +20,14 @@ export default function ExecutiveCommitteePage() {
         description="The elected leadership team responsible for governing and promoting racquetball across Rajasthan."
       />
       <PageContent>
-        <MediaImage
+        {/* <MediaImage
           src={siteImages.rra.leadershipBanner}
-          alt="RRA leadership — President Aamir Khan, General Secretary Aashish Poonia, and Head Physio Ankit Bhardwaj"
+          alt="Rajasthan Racquetball Association official banner and affiliations"
           aspect="wide"
           fit="contain"
           containerClassName="mb-12 bg-white ring-1 ring-slate-200"
           sizes="(max-width: 1200px) 100vw, 1024px"
-        />
+        /> */}
 
         <p className="mb-12 max-w-3xl text-lg leading-relaxed text-slate-600">
           The Executive Committee of the Rajasthan Racquetball Association comprises experienced sports

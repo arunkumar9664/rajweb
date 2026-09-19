@@ -3,6 +3,7 @@ import { Quote } from "lucide-react";
 import { MediaImage } from "@/shared/components/ui/media-image";
 import { testimonials, siteImages } from "@/shared/config/site";
 
+/*
 export function PresidentMessage() {
   return (
     <section className="bg-primary py-20">
@@ -37,6 +38,7 @@ export function PresidentMessage() {
     </section>
   );
 }
+*/
 
 export function GeneralSecretaryMessage() {
   return (

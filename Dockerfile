@@ -1,10 +1,10 @@
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install --ignore-scripts
 
 FROM base AS builder
 WORKDIR /app
@@ -12,6 +12,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV DEPLOY_TARGET=docker
 RUN npm run build
 
 FROM base AS runner
