@@ -76,16 +76,13 @@ export function Header() {
 
         <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
           <div className="hidden items-center gap-2 sm:gap-3 lg:flex">
-            <HeaderAuth />
             <Button variant="outline" size="sm" className="hidden sm:inline-flex" asChild>
               <Link href="/verify" prefetch>
                 <span className="hidden lg:inline">Verify Certificate</span>
                 <span className="lg:hidden">Verify</span>
               </Link>
             </Button>
-            <Button size="sm" asChild>
-              <Link href="/membership/club" prefetch>Join RRA</Link>
-            </Button>
+            <HeaderAuth />
           </div>
 
           <button
@@ -131,9 +128,6 @@ export function Header() {
           <div className="flex flex-col gap-2 pt-4">
             <Button variant="outline" asChild>
               <Link href="/verify" prefetch>Verify Certificate</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/membership/club" prefetch>Join RRA</Link>
             </Button>
           </div>
           <MobileHeaderAuth onNavigate={() => setMobileOpen(false)} />

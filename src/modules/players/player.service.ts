@@ -14,6 +14,8 @@ export interface RegisterPlayerInput {
   email: string;
   mobile: string;
   district: string;
+  /** Set only when the submitter is a logged-in user — links the record to their account. */
+  userId?: string;
 }
 
 async function resolveDistrictId(districtName: string) {
@@ -29,6 +31,13 @@ async function resolveDistrictId(districtName: string) {
 }
 
 export async function registerPlayer(input: RegisterPlayerInput) {
+  if (input.userId) {
+    const existing = await prisma.player.findUnique({ where: { userId: input.userId } });
+    if (existing) {
+      throw AppError.conflict("You already have a player registration.");
+    }
+  }
+
   const districtId = await resolveDistrictId(input.district);
 
   const player = await prisma.player.create({
@@ -40,11 +49,12 @@ export async function registerPlayer(input: RegisterPlayerInput) {
       email: sanitizeEmail(input.email),
       mobile: sanitizePhone(input.mobile),
       districtId,
+      userId: input.userId,
       status: "PENDING",
     },
   });
 
-  log.info({ playerId: player.playerId, districtId }, "Player registration submitted");
+  log.info({ playerId: player.playerId, districtId, userId: input.userId }, "Player registration submitted");
   return player;
 }
 

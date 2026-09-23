@@ -8,7 +8,7 @@ import { HeaderAuthSession, MobileHeaderAuthSession } from "@/shared/components/
 
 function StaticHeaderAuth() {
   return (
-    <Button variant="ghost" size="sm" className="hidden lg:inline-flex" asChild>
+    <Button size="sm" className="hidden lg:inline-flex" asChild>
       <Link href="/account/login" prefetch>
         <LogIn className="mr-1.5 h-4 w-4" />
         Login / Sign Up

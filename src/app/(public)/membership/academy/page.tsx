@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { CheckCircle, Dumbbell } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { getCurrentUser } from "@/security/auth/session";
 import { AcademyMembershipForm } from "./academy-membership-form";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Academy Membership",
@@ -18,7 +22,10 @@ const benefits = [
   "Tournament hosting opportunities for affiliated academies",
 ];
 
-export default function AcademyMembershipPage() {
+export default async function AcademyMembershipPage() {
+  const user = await getCurrentUser();
+  if (user) redirect("/account/memberships/academy");
+
   return (
     <>
       <PageHeader

@@ -4,6 +4,7 @@ import { AppError } from "@/core/errors/app-error";
 import { generateId } from "@/lib/utils";
 import { sanitizeEmail, sanitizePhone, sanitizeText } from "@/security/sanitize";
 import prisma from "@/infrastructure/database/prisma";
+import { getCurrentUser } from "@/security/auth/session";
 import type { CertificationLevel } from "@prisma/client";
 
 const coachSchema = z.object({
@@ -27,6 +28,15 @@ export const POST = withApiHandler(
   async (request, { requestId }) => {
     const body = await request.json();
     const data = coachSchema.parse(body);
+
+    const authUser = await getCurrentUser();
+    if (authUser) {
+      const existing = await prisma.coach.findUnique({ where: { userId: authUser.id } });
+      if (existing) {
+        throw AppError.conflict("You already have a coach registration.");
+      }
+    }
+
     const districtId = await resolveDistrictId(data.district);
 
     const coach = await prisma.coach.create({
@@ -38,6 +48,7 @@ export const POST = withApiHandler(
         qualification: sanitizeText(data.qualification),
         certificationLevel: data.certificationLevel as CertificationLevel,
         districtId,
+        userId: authUser?.id,
         status: "PENDING",
       },
     });

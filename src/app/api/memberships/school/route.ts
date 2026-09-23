@@ -4,6 +4,7 @@ import { AppError } from "@/core/errors/app-error";
 import { generateId } from "@/lib/utils";
 import { sanitizeEmail, sanitizePhone, sanitizeText } from "@/security/sanitize";
 import prisma from "@/infrastructure/database/prisma";
+import { getCurrentUser } from "@/security/auth/session";
 
 const schoolSchema = z.object({
   schoolName: z.string().min(2).max(200),
@@ -27,6 +28,15 @@ export const POST = withApiHandler(
   async (request, { requestId }) => {
     const body = await request.json();
     const data = schoolSchema.parse(body);
+
+    const authUser = await getCurrentUser();
+    if (authUser) {
+      const existing = await prisma.schoolMembership.findUnique({ where: { userId: authUser.id } });
+      if (existing) {
+        throw AppError.conflict("You already have a school membership application.");
+      }
+    }
+
     const districtId = await resolveDistrictId(data.district);
 
     const membership = await prisma.schoolMembership.create({
@@ -38,6 +48,7 @@ export const POST = withApiHandler(
         mobile: sanitizePhone(data.phone),
         address: sanitizeText(data.address),
         districtId,
+        userId: authUser?.id,
         studentCount: data.studentCount,
         status: "PENDING",
       },

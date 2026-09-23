@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { Building2, CheckCircle } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { getCurrentUser } from "@/security/auth/session";
 import { ClubMembershipForm } from "./club-membership-form";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Club Membership",
@@ -18,7 +22,10 @@ const benefits = [
   "IRA affiliation pathway for registered players",
 ];
 
-export default function ClubMembershipPage() {
+export default async function ClubMembershipPage() {
+  const user = await getCurrentUser();
+  if (user) redirect("/account/memberships/club");
+
   return (
     <>
       <PageHeader

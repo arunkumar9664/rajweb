@@ -33,12 +33,35 @@ model User {
   district         District?    @relation(fields: [districtId], references: [id])
   refreshTokens    RefreshToken[]
   auditLogs        AuditLog[]
+  profile          UserProfile?
+  player           Player?
+  coach            Coach?
+  clubMembership   ClubMembership?
+  schoolMembership SchoolMembership?
+  academyMembership AcademyMembership?
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
   @@index([roleId])
   @@index([districtId])
   @@map("users")
+}
+
+model UserProfile {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dateOfBirth DateTime?
+  gender      Gender?
+  address     String?
+  city        String?
+  state       String?
+  country     String?   @default("India")
+  pincode     String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("user_profiles")
 }
 
 model EmailOtp {
@@ -154,6 +177,8 @@ model Player {
   photo        String?
   districtId   String
   district     District          @relation(fields: [districtId], references: [id])
+  userId       String?           @unique
+  user         User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
   state        String            @default("Rajasthan")
   status       ApprovalStatus    @default(PENDING)
   approvedAt   DateTime?
@@ -206,6 +231,8 @@ model Coach {
   certificationLevel CertificationLevel
   districtId      String
   district        District          @relation(fields: [districtId], references: [id])
+  userId          String?           @unique
+  user            User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
   status          ApprovalStatus    @default(PENDING)
   approvedAt      DateTime?
   approvedBy      String?
@@ -263,6 +290,8 @@ model ClubMembership {
   address         String
   districtId      String
   district        District         @relation(fields: [districtId], references: [id])
+  userId          String?          @unique
+  user            User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
   numberOfCourts  Int              @default(1)
   facilities      String?
   status          MembershipStatus @default(PENDING)
@@ -288,6 +317,8 @@ model SchoolMembership {
   address         String
   districtId      String
   district        District         @relation(fields: [districtId], references: [id])
+  userId          String?          @unique
+  user            User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
   studentCount    Int?
   status          MembershipStatus @default(PENDING)
   approvedAt      DateTime?
@@ -312,6 +343,8 @@ model AcademyMembership {
   address         String
   districtId      String
   district        District         @relation(fields: [districtId], references: [id])
+  userId          String?          @unique
+  user            User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
   coachCount      Int?
   status          MembershipStatus @default(PENDING)
   approvedAt      DateTime?

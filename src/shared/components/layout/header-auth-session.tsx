@@ -51,7 +51,7 @@ export function HeaderAuthSession() {
           {session.user.name}
         </span>
         <Button variant="outline" size="sm" asChild>
-          <Link href="/account" prefetch>
+          <Link href="/account/dashboard" prefetch>
             <User className="mr-1.5 h-4 w-4" />
             My Account
           </Link>
@@ -65,7 +65,7 @@ export function HeaderAuthSession() {
   }
 
   return (
-    <Button variant="ghost" size="sm" className="hidden lg:inline-flex" asChild>
+    <Button size="sm" className="hidden lg:inline-flex" asChild>
       <Link href="/account/login" prefetch>
         <LogIn className="mr-1.5 h-4 w-4" />
         Login / Sign Up
@@ -103,7 +103,7 @@ export function MobileHeaderAuthSession({ onNavigate }: { onNavigate?: () => voi
       <div className="flex flex-col gap-2 border-t border-slate-200 pt-4">
         <p className="px-1 text-xs text-slate-500">Signed in as {session.user.name}</p>
         <Button variant="outline" asChild onClick={onNavigate}>
-          <Link href="/account" prefetch>
+          <Link href="/account/dashboard" prefetch>
             <User className="mr-2 h-4 w-4" />
             My Account
           </Link>

@@ -9,6 +9,7 @@ import { z } from "zod";
 import { Loader2, Mail } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { FormBuilder } from "@/shared/components/ui/form-builder";
+import { ComingSoonBanner } from "@/shared/components/ui/coming-soon-banner";
 import { apiFetch, handleApiFetch } from "@/lib/api-client";
 import { blockSubmitForStaticRelease } from "@/shared/lib/static-release";
 import { toast } from "sonner";
@@ -44,7 +45,7 @@ export function AccountLoginForm() {
   async function handleGoogleSignIn() {
     if (blockSubmitForStaticRelease("Continue with Google")) return;
     setGoogleLoading(true);
-    await signIn("google", { callbackUrl: "/account" });
+    await signIn("google", { callbackUrl: "/account/dashboard" });
   }
 
   async function onRequestOtp(data: EmailForm) {
@@ -77,12 +78,14 @@ export function AccountLoginForm() {
       return;
     }
 
-    router.push("/account");
+    router.push("/account/dashboard");
     router.refresh();
   }
 
   return (
     <div className="space-y-6">
+      <ComingSoonBanner feature="Account login" />
+
       {googleError && (
         <div className="rounded-md bg-secondary/10 px-4 py-3 text-sm text-secondary">
           {GOOGLE_ERROR_MESSAGES[googleError] ?? "Sign-in failed. Please try again."}

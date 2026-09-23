@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { withApiHandler, jsonSuccess } from "@/core/api/with-api-handler";
 import { registerPlayer } from "@/modules/players/player.service";
+import { getCurrentUser } from "@/security/auth/session";
 
 const playerSchema = z.object({
   name: z.string().min(2).max(100),
@@ -15,7 +16,9 @@ export const POST = withApiHandler(
   async (request, { requestId }) => {
     const body = await request.json();
     const data = playerSchema.parse(body);
-    const player = await registerPlayer(data);
+    // Optional — null for anonymous public submissions, unchanged from today.
+    const authUser = await getCurrentUser();
+    const player = await registerPlayer({ ...data, userId: authUser?.id });
     return jsonSuccess(
       { playerId: player.playerId, status: player.status },
       requestId,

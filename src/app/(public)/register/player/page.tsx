@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { UserCheck } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { getCurrentUser } from "@/security/auth/session";
 import { PlayerRegistrationForm } from "./player-registration-form";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Player Registration",
@@ -10,7 +14,10 @@ export const metadata: Metadata = {
     "Register as an official player with the Rajasthan Racquetball Association and compete in sanctioned state tournaments.",
 };
 
-export default function PlayerRegistrationPage() {
+export default async function PlayerRegistrationPage() {
+  const user = await getCurrentUser();
+  if (user) redirect("/account/player");
+
   return (
     <>
       <PageHeader

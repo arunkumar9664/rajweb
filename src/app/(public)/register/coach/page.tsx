@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { Award } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { getCurrentUser } from "@/security/auth/session";
 import { CoachRegistrationForm } from "./coach-registration-form";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Coach Registration",
@@ -10,7 +14,10 @@ export const metadata: Metadata = {
     "Register as a certified racquetball coach with the Rajasthan Racquetball Association and access training programs.",
 };
 
-export default function CoachRegistrationPage() {
+export default async function CoachRegistrationPage() {
+  const user = await getCurrentUser();
+  if (user) redirect("/account/coach");
+
   return (
     <>
       <PageHeader

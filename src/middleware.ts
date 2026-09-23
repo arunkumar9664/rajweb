@@ -41,11 +41,16 @@ function getClientIp(request: NextRequest) {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // /account/login itself must stay reachable while logged out; every other
+  // /account/* route requires a session.
+  const isProtectedAccountPath = pathname.startsWith("/account") && pathname !== "/account/login" && !pathname.startsWith("/account/login/");
+
   // Public static pages: skip all async middleware work for fastest navigation.
   if (
     !pathname.startsWith("/api/") &&
     !pathname.startsWith("/admin") &&
-    !pathname.startsWith("/login")
+    !pathname.startsWith("/login") &&
+    !isProtectedAccountPath
   ) {
     const response = NextResponse.next();
     applySecurityHeaders(response);
@@ -92,6 +97,16 @@ export async function middleware(request: NextRequest) {
     const role = token.role as string | undefined;
     if (!role || role === ROLES.PUBLIC_USER) {
       return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
+
+  if (isProtectedAccountPath) {
+    const token = await getToken({ req: request, secret: authSecret });
+
+    if (!token) {
+      const loginUrl = new URL("/account/login", request.url);
+      loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
     }
   }
 

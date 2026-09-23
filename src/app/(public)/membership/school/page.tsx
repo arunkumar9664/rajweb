@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { CheckCircle, GraduationCap } from "lucide-react";
 import { PageHeader, PageContent } from "@/shared/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { getCurrentUser } from "@/security/auth/session";
 import { SchoolMembershipForm } from "./school-membership-form";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "School Membership",
@@ -18,7 +22,10 @@ const benefits = [
   "Student player registration through official RRA portal",
 ];
 
-export default function SchoolMembershipPage() {
+export default async function SchoolMembershipPage() {
+  const user = await getCurrentUser();
+  if (user) redirect("/account/memberships/school");
+
   return (
     <>
       <PageHeader
