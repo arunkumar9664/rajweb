@@ -5,6 +5,7 @@ import { checkRateLimit } from "@/security/rate-limit";
 import { apiError } from "@/core/api/api-response";
 import { generateRequestId } from "@/core/api/request-context";
 import { ErrorCodes } from "@/core/errors/error-codes";
+import { ROLES } from "@/security/rbac/permissions";
 
 const authSecret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
 
@@ -21,14 +22,6 @@ const securityHeaders: Record<string, string> = {
   "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
   "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
 };
-
-const adminRoles = new Set([
-  "super-admin",
-  "federation-admin",
-  "district-admin",
-  "tournament-manager",
-  "content-manager",
-]);
 
 function applySecurityHeaders(response: NextResponse) {
   Object.entries(securityHeaders).forEach(([key, value]) => {
@@ -90,8 +83,14 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
+    // Coarse gate only: any authenticated, non-public-user role may attempt
+    // /admin — a brand-new dynamic role a Super Admin just created must not
+    // be locked out here. The real, per-module gating happens server-side on
+    // each page (requireAdminScope) and each API route (requirePermission),
+    // which check the specific permission, not just "is this role allowed in
+    // the building at all".
     const role = token.role as string | undefined;
-    if (!role || !adminRoles.has(role)) {
+    if (!role || role === ROLES.PUBLIC_USER) {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }

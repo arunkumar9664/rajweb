@@ -6,7 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import {
   LayoutDashboard, Users, Trophy, Newspaper, Shield, Settings,
   LogOut, Menu, X, UserCheck, GraduationCap, Building2, FileText,
-  MapPin, Award, ScrollText, ShoppingBag,
+  MapPin, Award, ScrollText, ShoppingBag, KeyRound,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -23,6 +23,7 @@ const navItems: { name: string; href: string; icon: typeof LayoutDashboard; perm
   { name: "Certificates", href: "/admin/certificates", icon: Award, permission: PERMISSIONS.CERTIFICATES_READ },
   { name: "Districts", href: "/admin/districts", icon: MapPin, permission: PERMISSIONS.DISTRICTS_READ },
   { name: "Users", href: "/admin/users", icon: Users, permission: PERMISSIONS.USERS_READ },
+  { name: "Roles", href: "/admin/roles", icon: KeyRound, permission: PERMISSIONS.ROLES_READ },
   { name: "Audit Logs", href: "/admin/audit-logs", icon: ScrollText, permission: PERMISSIONS.AUDIT_READ },
   { name: "Settings", href: "/admin/settings", icon: Settings, permission: PERMISSIONS.SETTINGS_MANAGE },
 ];

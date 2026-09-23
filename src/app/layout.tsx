@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Toaster } from "sonner";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/shared/components/seo/json-ld";
+import { SessionProvider } from "@/shared/components/providers/session-provider";
 import "./globals.css";
 
 const geist = Geist({
@@ -68,7 +69,9 @@ export default function RootLayout({
         <WebSiteJsonLd />
       </head>
       <body className="min-h-full flex flex-col antialiased">
-        {children}
+        <SessionProvider>
+          {children}
+        </SessionProvider>
         <Toaster position="top-right" richColors />
       </body>
     </html>

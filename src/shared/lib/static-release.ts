@@ -19,6 +19,7 @@ export function notifyFeatureComingSoon(featureLabel: string) {
 
 /** Returns true when submit should be blocked (static release mode). */
 export function blockSubmitForStaticRelease(featureLabel: string): boolean {
+  if (!isStaticReleaseMode()) return false;
   notifyFeatureComingSoon(featureLabel);
   return true;
 }

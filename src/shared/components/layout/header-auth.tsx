@@ -9,9 +9,9 @@ import { HeaderAuthSession, MobileHeaderAuthSession } from "@/shared/components/
 function StaticHeaderAuth() {
   return (
     <Button variant="ghost" size="sm" className="hidden lg:inline-flex" asChild>
-      <Link href="/login" prefetch>
+      <Link href="/account/login" prefetch>
         <LogIn className="mr-1.5 h-4 w-4" />
-        Admin Login
+        Login / Sign Up
       </Link>
     </Button>
   );
@@ -21,9 +21,9 @@ function StaticMobileHeaderAuth({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="border-t border-slate-200 pt-4">
       <Button variant="outline" className="w-full" asChild onClick={onNavigate}>
-        <Link href="/login" prefetch>
+        <Link href="/account/login" prefetch>
           <LogIn className="mr-2 h-4 w-4" />
-          Admin Login
+          Login / Sign Up
         </Link>
       </Button>
     </div>

@@ -86,6 +86,7 @@ async function main() {
         name: "Super Admin",
         roleId: superAdminRole.id,
         isActive: true,
+        authProvider: "CREDENTIALS",
       },
     });
   }
@@ -105,6 +106,7 @@ async function main() {
         roleId: districtAdminRole.id,
         districtId: jaipurDistrict.id,
         isActive: true,
+        authProvider: "CREDENTIALS",
       },
     });
   }

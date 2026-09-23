@@ -121,6 +121,7 @@ export function Footer() {
               <Link href="/governance/rti" className="hover:text-white">RTI</Link>
               <Link href="/governance/anti-doping" className="hover:text-white">Anti-Doping</Link>
               <Link href="/governance/privacy-policy" className="hover:text-white">Privacy Policy</Link>
+              <Link href="/login" className="hover:text-white">Admin Login</Link>
             </div>
           </div>
           <p className="text-center text-xs text-slate-500">

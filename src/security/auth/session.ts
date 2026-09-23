@@ -14,7 +14,12 @@ export async function getSession() {
 export async function getCurrentUser(): Promise<SessionUser | null> {
   const session = await getSession();
   if (!session?.user) return null;
-  return session.user as SessionUser;
+  const user = session.user as SessionUser;
+  // isActive is refreshed from the DB on every request (see auth.ts jwt
+  // callback) — a deactivation takes effect on the user's next request, not
+  // after their session naturally expires.
+  if (user.isActive === false) return null;
+  return user;
 }
 
 export async function requireAuth(): Promise<SessionUser> {

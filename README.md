@@ -148,7 +148,15 @@ NEXTAUTH_URL=https://rajasthanracquetball.com
 JWT_SECRET=<generate-secret>
 APP_URL=https://rajasthanracquetball.com
 RESEND_API_KEY=re_xxxxx
+
+# Required for public user login (Google OAuth + Gmail OTP) — omit and those
+# two sign-in options simply fail with a clear error until configured.
+GOOGLE_CLIENT_ID=<from Google Cloud Console — OAuth client ID>
+GOOGLE_CLIENT_SECRET=<from Google Cloud Console>
+RESEND_FROM_EMAIL=<a verified Resend sender, e.g. no-reply@rajasthanracquetball.com>
 ```
+
+Google OAuth setup: Google Cloud Console → APIs & Services → Credentials → Create OAuth client ID (type: Web application) → add authorized redirect URI `https://<your-domain>/api/auth/callback/google` (and `http://localhost:3000/api/auth/callback/google` for local dev).
 
 ### Deploy Steps
 
